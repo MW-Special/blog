@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Telegram 风格博客</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #f1f1f1;
+      border-right: 1px solid #ccc;
+      overflow-y: auto;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar li {
+      padding: 15px;
+      cursor: pointer;
+      border-bottom: 1px solid #ddd;
+    }
+    .sidebar li:hover {
+      background-color: #e0e0e0;
+    }
+    .content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .content img {
+      max-width: 100%;
+      height: auto;
+    }
+    .content a {
+      color: #1a0dab;
+      text-decoration: none;
+    }
+    .content a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <ul id="article-list">
+        <li data-id="1">宏碁掠夺者·擎 Neo（Predator Helios Neo）防止缩缸指导及优化游戏性能</li>
+        <li data-id="2">文章标题二</li>
+        <li data-id="3">文章标题三</li>
+      </ul>
+    </aside>
+    <main class="content" id="article-content">
+      <h2>欢迎阅读</h2>
+      <p>请选择左侧的文章标题以查看内容。</p>
+    </main>
+  </div>
+
+  <script>
+    const articles = {
+      1: {
+        title: "宏碁掠夺者·擎 Neo（Predator Helios Neo）防止缩缸指导及优化游戏性能",
+        content: `
+<p>方式一：使用 Intel XTU（推荐，简单可靠）
+下载 Intel XTU：
+👉</p>
+          <p>欢迎访问 <a href="https://www.intel.com/content/www/us/en/download/17881/intel-extreme-tuning-utility-intel-xtu.html">xtu</a> 获取更多信息。</p>
+          <p>设置如下：
+
+Turbo Boost Power Max（PL1）：45
+
+Turbo Boost Short Power Max（PL2）：55
+
+Processor Core IccMax：95（默认即可）
+
+P-core Ratio（All Cores）：40
+
+E-core Ratio（All Cores）：24
+
+点击“Apply”，即可永久保守运行</p>
+          <p> 方式二：ThrottleStop 限频 +（可选）关 E-Core
+下载：ThrottleStop 9.6
+
+解压后运行 ThrottleStop.exe
+
+配置如下：
+
+取消勾选“Turbo”（或者在 FIVR 里手动设置 40x/24x）
+
+在 FIVR 里关闭“BD PROCHOT”
+
+EPP 值设为 128~192，偏向稳定
+
+可选：在“TPL”页面里设置 PL1=45、PL2=55
+
+保存后，可设为开机启动自动加载配置
+
+✅ 关闭 E-Core 的方案（可选）
+你的机型目前BIOS 默认并不提供关闭 E-core 的选项，但你可以通过 ThrottleStop 中禁止它们参与运行：
+
+打开 ThrottleStop → TPL 标签页
+
+找到线程调度控制（如果你的版本支持）
+
+或者设置高 EPP 值+锁定低倍频（E-core倍率设为8x）作为“假性关核”
+
+彻底关闭只能通过特殊 BIOS 或 EC 工具，目前宏碁不开放此权限。
+
+✅ 总结给你
+项目	推荐值
+P-core 最大频率	4.0 GHz
+E-core 最大频率	2.4 GHz
+PL1	45W
+PL2	55W
+工具推荐	Intel XTU / ThrottleStop
+关核建议	E-core不必彻底关，限制频率即可稳定</p>
+        `
+      },
+      2: {
+        title: "文章标题二",
+        content: `
+          <p>这是文章二的内容，包含一个链接到 <a href="https://www.openai.com" target="_blank">OpenAI</a> 的超链接。</p>
+          <p>下面是一张图片：</p>
+          <img src="image2.jpg" alt="示例图片" width="300">
+        `
+      },
+      3: {
+        title: "文章标题三",
+        content: `
+          <p>在这篇文章中，我们将展示如何插入图片和链接。</p>
+          <p>例如，点击 <a href="https://www.wikipedia.org" target="_blank">维基百科</a> 了解更多信息。</p>
+          <p>查看下面的图片：</p>
+          <img src="image3.jpg" alt="示例图片" width="250">
+        `
+      }
+    };
+
+    document.getElementById('article-list').addEventListener('click', function(e) {
+      if (e.target && e.target.nodeName === "LI") {
+        const articleId = e.target.getAttribute('data-id');
+        const article = articles[articleId];
+        const contentDiv = document.getElementById('article-content');
+        contentDiv.innerHTML = `<h2>${article.title}</h2>${article.content}`;
+      }
+    });
+  </script>
+</body>
+</html>
