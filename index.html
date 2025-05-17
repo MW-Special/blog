@@ -103,10 +103,15 @@
     <nav class="sidebar" id="sidebar">
       <ul id="article-list">
         <li data-id="1" class="active">宏碁掠夺者·擎 Neo 优化指南</li>
-        <li data-id="2">文章标题二</li>
-        <li data-id="3">文章标题三</li>
         <li data-id="2">主流cpu参数对比</li>
         <li data-id="3">telegram【电报】【纸飞机】使用教程</li>
+        <li data-id="4">文章四标题</li>
+        <li data-id="5">文章五标题</li>
+        <li data-id="6">文章六标题</li>
+        <li data-id="7">文章七标题</li>
+        <li data-id="8">文章八标题</li>
+        <li data-id="9">文章九标题</li>
+        <li data-id="10">文章十标题</li>
       </ul>
     </nav>
     <main class="content" id="article-content">
@@ -117,7 +122,7 @@
 
   <script>
     const articles = {
-      1: {
+       1: {
         title: "宏碁掠夺者·擎 Neo 优化指南",
         content: `
           <p>方式一：使用 Intel XTU（推荐，简单可靠）</p>
@@ -279,9 +284,9 @@
       3: {
         title: "文章标题三",
         content: `
-          <p>在这篇文章中，我们将展示如何插入图片和链接。</p>
+          <p>在这篇文章中，我们将展示如何使用电报。</p>
           <p>例如，点击 <a href="https://www.wikipedia.org" target="_blank">维基百科</a> 了解更多信息。</p>
-          <p>查看下面的图片：</p>
+          <p>测试文本</p>
           <img src="image3.jpg" alt="示例图片" width="250">
           <h2>中国用户Telegram（电报）基础使用教程</h2>
 
@@ -359,36 +364,32 @@
   <li>通过GitHub找到项目及官方Telegram群组，参与讨论</li>
 </ul>
 
-<p>希望这份教程对你有所帮助，祝你顺利使用Telegram和GitHub！</p>
-        `
-      }
+<p>希望这份教程对你有所帮助，祝你顺利使用Telegram和GitHub！</p>` },
+      4: { title: "文章四标题", content: `<p>这是第四篇文章的内容。</p>` },
+      5: { title: "文章五标题", content: `<p>这是第五篇文章的内容。</p>` },
+      6: { title: "文章六标题", content: `<p>这是第六篇文章的内容。</p>` },
+      7: { title: "文章七标题", content: `<p>这是第七篇文章的内容。</p>` },
+      8: { title: "文章八标题", content: `<p>这是第八篇文章的内容。</p>` },
+      9: { title: "文章九标题", content: `<p>这是第九篇文章的内容。</p>` },
+      10: { title: "文章十标题", content: `<p>这是第十篇文章的内容。</p>` }
     };
 
-    const articleList = document.getElementById('article-list');
-    const contentDiv = document.getElementById('article-content');
-    const sidebar = document.getElementById('sidebar');
-
-    articleList.addEventListener('click', function(e) {
-      if (e.target && e.target.nodeName === "LI") {
-        const articleId = e.target.getAttribute('data-id');
-        const article = articles[articleId];
-        contentDiv.innerHTML = `<h2>${article.title}</h2>${article.content}`;
-
-        // 更新活动状态
-        const items = articleList.querySelectorAll('li');
-        items.forEach(item => item.classList.remove('active'));
-        e.target.classList.add('active');
-
-        // 在移动设备上点击后隐藏侧边栏
-        if (window.innerWidth <= 768) {
-          sidebar.classList.remove('active');
-        }
-      }
-    });
-
     function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
       sidebar.classList.toggle('active');
     }
+
+    document.getElementById('article-list').addEventListener('click', function(e) {
+      const li = e.target.closest('li');
+      if (!li) return;
+
+      const id = li.getAttribute('data-id');
+      if (articles[id]) {
+        document.querySelectorAll('#article-list li').forEach(item => item.classList.remove('active'));
+        li.classList.add('active');
+        document.getElementById('article-content').innerHTML = `<h2>${articles[id].title}</h2>${articles[id].content}`;
+      }
+    });
   </script>
 </body>
 </html>
