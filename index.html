@@ -103,33 +103,265 @@
     <nav class="sidebar" id="sidebar">
       <ul id="article-list">
         <li data-id="1" class="active">宏碁掠夺者·擎 Neo 优化指南</li>
+        <li data-id="2">文章标题二</li>
+        <li data-id="3">文章标题三</li>
         <li data-id="2">主流cpu参数对比</li>
         <li data-id="3">telegram【电报】【纸飞机】使用教程</li>
-        <li data-id="3">telegram【电报】【纸飞机】使用教程</li> 
-        <li data-id="4">笔记本cpu性能一览</li>
       </ul>
     </nav>
     <main class="content" id="article-content">
-@@ -275,7 +276,7 @@
+      <h2>欢迎阅读</h2>
+      <p>请选择左侧的文章标题以查看内容。</p>
+    </main>
+  </div>
+
+  <script>
+    const articles = {
+      1: {
+        title: "宏碁掠夺者·擎 Neo 优化指南",
+        content: `
+          <p>方式一：使用 Intel XTU（推荐，简单可靠）</p>
+          <p>下载 Intel XTU：<a href="https://www.intel.com/content/www/us/en/download/17881/intel-extreme-tuning-utility-intel-xtu.html" target="_blank">点击这里</a></p>
+          <p>设置如下：</p>
+          <ul>
+            <li>Turbo Boost Power Max（PL1）：45</li>
+            <li>Turbo Boost Short Power Max（PL2）：55</li>
+            <li>Processor Core IccMax：95（默认即可）</li>
+            <li>P-core Ratio（All Cores）：40</li>
+            <li>E-core Ratio（All Cores）：24</li>
+          </ul>
+          <p>点击“Apply”，即可永久保守运行。</p>
+          <p>方式二：ThrottleStop 限频 +（可选）关 E-Core</p>
+          <p>下载：ThrottleStop 9.6</p>
+          <p>解压后运行 ThrottleStop.exe，配置如下：</p>
+          <ul>
+            <li>取消勾选“Turbo”（或者在 FIVR 里手动设置 40x/24x）</li>
+            <li>在 FIVR 里关闭“BD PROCHOT”</li>
+            <li>EPP 值设为 128~192，偏向稳定</li>
+            <li>可选：在“TPL”页面里设置 PL1=45、PL2=55</li>
+          </ul>
+          <p>保存后，可设为开机启动自动加载配置。</p>
+          <p>✅ 关闭 E-Core 的方案（可选）</p>
+          <p>你的机型目前 BIOS 默认并不提供关闭 E-core 的选项，但你可以通过 ThrottleStop 中禁止它们参与运行：</p>
+          <ul>
+            <li>打开 ThrottleStop → TPL 标签页</li>
+            <li>找到线程调度控制（如果你的版本支持）</li>
+            <li>或者设置高 EPP 值+锁定低倍频（E-core 倍率设为 8x）作为“假性关核”</li>
+          </ul>
+          <p>彻底关闭只能通过特殊 BIOS 或 EC 工具，目前宏碁不开放此权限。</p>
+          <p>✅ 总结给你</p>
+          <table>
+            <tr><th>项目</th><th>推荐值</th></tr>
+            <tr><td>P-core 最大频率</td><td>4.0 GHz</td></tr>
+            <tr><td>E-core 最大频率</td><td>2.4 GHz</td></tr>
+            <tr><td>PL1</td><td>45W</td></tr>
+            <tr><td>PL2</td><td>55W</td></tr>
+            <tr><td>工具推荐</td><td>Intel XTU / ThrottleStop</td></tr>
+            <tr><td>关核建议</td><td>E-core 不必彻底关，限制频率即可稳定</td></tr>
+          </table>
+        `
+      },
+      2: {
+        title: "关于主流笔记本CPU参数对比",
+        content: `
+         <table border="1">
+  <tr>
+    <th>参数/型号</th>
+    <th>i9-14900HX【游戏cpu】</th>
+    <th>i9-13900HX【游戏cpu】</th>
+    <th>Ryzen 9 7845HX【生产力cpu】</th>
+    <th>i5-1340P【办公cpu】</th>
+    <th>i5-12600KF【游戏参照组，台式机cpu】</th>
+    <th>Ultra 7 265K【生产力参照组，台式机cpu】</th>
+  </tr>
+  <tr>
+    <td>架构</td>
+    <td>Raptor Lake</td>
+    <td>Raptor Lake</td>
+    <td>Zen 4</td>
+    <td>Raptor Lake (移动低电压)</td>
+    <td>Alder Lake</td>
+    <td>Arrow Lake (台积电N3P)</td>
+  </tr>
+  <tr>
+    <td>核心/线程</td>
+    <td>8P+16E / 24核32线程</td>
+    <td>8P+16E / 24核32线程</td>
+    <td>12核24线程</td>
+    <td>4P+8E / 12核16线程</td>
+    <td>6P+4E / 10核16线程</td>
+    <td>8P+12E / 20核20线程</td>
+  </tr>
+  <tr>
+    <td>最大睿频</td>
+    <td>P核5.8GHz / E核4.1GHz</td>
+    <td>P核5.4GHz / E核3.9GHz</td>
+    <td>5.6GHz</td>
+    <td>P核4.6GHz / E核3.4GHz</td>
+    <td>P核4.9GHz</td>
+    <td>P核5.5GHz / E核4.6GHz</td>
+  </tr>
+  <tr>
+    <td>三级缓存</td>
+    <td>36MB</td>
+    <td>36MB</td>
+    <td>64MB</td>
+    <td>12MB</td>
+    <td>20MB</td>
+    <td>30MB</td>
+  </tr>
+  <tr>
+    <td>TDP</td>
+    <td>55W（最大157W）</td>
+    <td>55W</td>
+    <td>55W（最大170W）</td>
+    <td>25W</td>
+    <td>125W</td>
+    <td>125W（超频功耗可达310W+）</td>
+  </tr>
+  <tr>
+    <td>内存支持</td>
+    <td>DDR5-5600</td>
+    <td>DDR5-5600</td>
+    <td>DDR5-5200</td>
+    <td>DDR5-5200</td>
+    <td>DDR4-3200/DDR5-4800</td>
+    <td>DDR5-7200</td>
+  </tr>
+  <tr>
+    <td>制程工艺</td>
+    <td>Intel 7（10nm Enhanced）</td>
+    <td>Intel 7（10nm Enhanced）</td>
+    <td>5nm（台积电）</td>
+    <td>Intel 7（10nm Enhanced）</td>
+    <td>Intel 7（10nm Enhanced）</td>
+    <td>台积电N3P（3nm）</td>
+  </tr>
+  <tr>
+    <td>超频能力</td>
+    <td>支持XTU超频</td>
+    <td>支持XTU超频</td>
+    <td>支持PBO超频</td>
+    <td>不支持</td>
+    <td>支持</td>
+    <td>支持（P核最高5.7GHz+，E核5.2GHz+）</td>
+  </tr>
+  <tr>
+    <td>集成显卡</td>
+    <td>Intel UHD Graphics（14代）</td>
+    <td>Intel UHD Graphics（13代）</td>
+    <td>AMD Radeon™ 610M</td>
+    <td>Iris Xe（80EU）</td>
+    <td>无</td>
+    <td>无</td>
+  </tr>
+  <tr>
+    <td>主要应用场景</td>
+    <td>旗舰游戏本、移动工作站</td>
+    <td>高端游戏本</td>
+    <td>高性能桌面/工作站</td>
+    <td>轻薄本、商务本</td>
+    <td>中高端桌面游戏</td>
+    <td>高性能桌面/超频平台</td>
+  </tr>
+  <tr>
+    <td>特色技术</td>
+    <td>雷电5、XMP 3.0、Application Optimization</td>
+    <td>雷电4、XMP 3.0</td>
+    <td>PCIe 5.0、AMD EXPO</td>
+    <td>低功耗优化、AI加速</td>
+    <td>无超线程、高性价比</td>
+    <td>DLVR电压控制、无超线程、E核IPC提升32%</td>
+  </tr>
+</table>
         `
       },
       3: {
         title: "文章标题三",
-        title: "TELEGRAM教程",
         content: `
+          <p>在这篇文章中，我们将展示如何插入图片和链接。</p>
+          <p>例如，点击 <a href="https://www.wikipedia.org" target="_blank">维基百科</a> 了解更多信息。</p>
+          <p>查看下面的图片：</p>
+          <img src="image3.jpg" alt="示例图片" width="250">
           <h2>中国用户Telegram（电报）基础使用教程</h2>
 
-@@ -356,33 +357,40 @@
+<h3>1. Telegram下载安装</h3>
+<p>Telegram是一款全球流行的即时通讯软件，支持跨平台使用。中国大陆用户需要注意，由于网络限制，Telegram可能无法直接访问。</p>
+<p>请先访问官方网站下载安装：</p>
+<ul>
+  <li><a href="https://telegram.org/" target="_blank" rel="noopener">Telegram官网</a></li>
+  <li>支持Windows、Mac、Android和iOS</li>
+</ul>
+<img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram Logo" style="width:100px;"/>
+
+<h3>2. 无法访问Telegram怎么办？</h3>
+<p>由于网络限制，国内用户可能无法直接使用Telegram。如果遇到访问问题，可以使用科学上网工具。推荐使用 <a href="https://github.com/Dreamacro/clash" target="_blank" rel="noopener">Clash</a>，这是一个开源代理客户端。</p>
+<p>Clash的下载与使用教程请访问其GitHub页面，设置好代理后即可正常访问Telegram。</p>
+
+<h3>3. Telegram注册与登录</h3>
+<p>打开Telegram，输入手机号码进行注册。请注意：</p>
+<ul>
+  <li>中国大陆手机号码需加<span style="color:red;">+86</span>国际区号，如+86 138xxxxxxx</li>
+  <li>部分用户反馈+86号码注册失败，可以尝试使用以下方法：</li>
+  <ul>
+    <li>使用非+86的虚拟号码（部分网络提供）</li>
+    <li>更换国际区号，比如+852（香港）、+886（台湾）等</li>
+    <li>等待官方验证码短信，有时需要多次尝试</li>
+  </ul>
+</ul>
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram注册" style="width:150px;"/>
+
+<h3>4. 如何切换Telegram为中文界面</h3>
+<p>Telegram默认英文，切换中文步骤：</p>
+<ol>
+  <li>打开Telegram，点击左上角菜单（三条横线图标）</li>
+  <li>选择 <strong>Settings（设置）</strong></li>
+  <li>点击 <strong>Language（语言）</strong></li>
+  <li>从列表中选择 <strong>简体中文</strong></li>
+</ol>
+<img src="https://telegram.org/img/tg_lang.png" alt="切换语言" style="width:300px;"/>
+
+<h3>5. 如何加好友和加入群组</h3>
+<p>Telegram有两种主要的互动方式：添加联系人和加入群组。</p>
+<ul>
+  <li><strong>添加好友：</strong>点击右上角放大镜图标，输入对方的用户名（格式：@用户名），搜索后发送好友请求。</li>
+  <li><strong>加入群组：</strong>获取群组邀请链接或群组ID，点击链接或搜索群组名称加入。</li>
+</ul>
+<p>如果你不知道群组链接，可以通过GitHub或其他平台找到相应项目，再找联系方式加入。</p>
+
+<hr>
+
+<h2>GitHub账号注册及通过GitHub找到Telegram群组</h2>
+
+<h3>1. 注册GitHub账号</h3>
+<p>GitHub是全球最大的开源代码托管平台，很多项目会在这里发布及交流。</p>
+<ol>
+  <li>访问 <a href="https://github.com/join" target="_blank" rel="noopener">GitHub注册页面</a></li>
+  <li>填写用户名、邮箱、密码，完成验证</li>
+  <li>激活邮箱后即可使用账号</li>
+</ol>
+<img src="https://github.githubassets.com/images/modules/site/sign-in-github.png" alt="GitHub注册" style="width:300px;"/>
+
+<h3>2. 在GitHub上寻找项目及Telegram联系方式</h3>
+<ol>
+  <li>登录GitHub，在搜索栏输入你感兴趣的项目名称或关键词</li>
+  <li>进入项目主页后，通常README.md文件里会包含项目介绍及联系方式</li>
+  <li>查找“Telegram”或“TG”相关的联系方式或群组邀请链接</li>
+  <li>点击链接即可跳转到Telegram，完成加群操作</li>
+</ol>
+<img src="https://docs.github.com/assets/images/help/repository/repo-overview.png" alt="GitHub项目页面" style="width:400px;"/>
+
+<h3>总结</h3>
+<ul>
+  <li>国内用户先准备好科学上网工具，如Clash</li>
+  <li>注册Telegram时注意手机号区号问题</li>
+  <li>登录后切换中文界面方便使用</li>
+  <li>通过GitHub找到项目及官方Telegram群组，参与讨论</li>
+</ul>
+
 <p>希望这份教程对你有所帮助，祝你顺利使用Telegram和GitHub！</p>
         `
       }
-      4: {
-        title: "主流笔记本cpu性能一览",
-        content: `
-          <p>欢迎各位积极贡献各种笔记本cpu-z截图</p>
-          <img src="https://github.com/laptop-14lyc/blog/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-05-17%20170740.png?raw=true" alt="7845HX" width="300">
-        `
-      },
     };
 
     const articleList = document.getElementById('article-list');
