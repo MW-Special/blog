@@ -3,62 +3,110 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Telegram 风格博客</title>
+  <title>LYC的个人博客</title>
   <style>
+    :root {
+      --primary-color: #1a0dab;
+      --sidebar-bg: #f9f9f9;
+      --hover-bg: #e0e0e0;
+      --transition-speed: 0.3s;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-color: #fff;
+      color: #333;
     }
+
     .container {
       display: flex;
-      height: 100vh;
+      min-height: 100vh;
     }
-    .sidebar {
+
+    nav.sidebar {
       width: 250px;
-      background-color: #f1f1f1;
+      background-color: var(--sidebar-bg);
       border-right: 1px solid #ccc;
       overflow-y: auto;
+      transition: transform var(--transition-speed) ease;
     }
-    .sidebar ul {
+
+    nav.sidebar ul {
       list-style: none;
       padding: 0;
       margin: 0;
     }
-    .sidebar li {
+
+    nav.sidebar li {
       padding: 15px;
       cursor: pointer;
       border-bottom: 1px solid #ddd;
+      transition: background-color var(--transition-speed) ease;
     }
-    .sidebar li:hover {
-      background-color: #e0e0e0;
+
+    nav.sidebar li:hover,
+    nav.sidebar li.active {
+      background-color: var(--hover-bg);
     }
-    .content {
+
+    main.content {
       flex: 1;
       padding: 20px;
       overflow-y: auto;
     }
-    .content img {
+
+    main.content img {
       max-width: 100%;
       height: auto;
     }
-    .content a {
-      color: #1a0dab;
+
+    main.content a {
+      color: var(--primary-color);
       text-decoration: none;
     }
-    .content a:hover {
+
+    main.content a:hover {
       text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      nav.sidebar {
+        width: 100%;
+        transform: translateY(-100%);
+        position: absolute;
+        z-index: 1000;
+      }
+
+      nav.sidebar.active {
+        transform: translateY(0);
+      }
+
+      .menu-toggle {
+        display: block;
+        padding: 10px;
+        background-color: var(--primary-color);
+        color: #fff;
+        text-align: center;
+        cursor: pointer;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="menu-toggle" onclick="toggleSidebar()">菜单</div>
   <div class="container">
-    <aside class="sidebar">
+    <nav class="sidebar" id="sidebar">
       <ul id="article-list">
-        <li data-id="1">宏碁掠夺者·擎 Neo（Predator Helios Neo）防止缩缸指导及优化游戏性能</li>
+        <li data-id="1" class="active">宏碁掠夺者·擎 Neo 优化指南</li>
         <li data-id="2">文章标题二</li>
         <li data-id="3">文章标题三</li>
       </ul>
-    </aside>
+    </nav>
     <main class="content" id="article-content">
       <h2>欢迎阅读</h2>
       <p>请选择左侧的文章标题以查看内容。</p>
@@ -68,61 +116,47 @@
   <script>
     const articles = {
       1: {
-        title: "宏碁掠夺者·擎 Neo（Predator Helios Neo）防止缩缸指导及优化游戏性能",
+        title: "宏碁掠夺者·擎 Neo 优化指南",
         content: `
-<p>方式一：使用 Intel XTU（推荐，简单可靠）
-下载 Intel XTU：
-👉</p>
-          <p>欢迎访问 <a href="https://www.intel.com/content/www/us/en/download/17881/intel-extreme-tuning-utility-intel-xtu.html">xtu</a> 获取更多信息。</p>
-          <p>设置如下：
-
-Turbo Boost Power Max（PL1）：45
-
-Turbo Boost Short Power Max（PL2）：55
-
-Processor Core IccMax：95（默认即可）
-
-P-core Ratio（All Cores）：40
-
-E-core Ratio（All Cores）：24
-
-点击“Apply”，即可永久保守运行</p>
-          <p> 方式二：ThrottleStop 限频 +（可选）关 E-Core
-下载：ThrottleStop 9.6
-
-解压后运行 ThrottleStop.exe
-
-配置如下：
-
-取消勾选“Turbo”（或者在 FIVR 里手动设置 40x/24x）
-
-在 FIVR 里关闭“BD PROCHOT”
-
-EPP 值设为 128~192，偏向稳定
-
-可选：在“TPL”页面里设置 PL1=45、PL2=55
-
-保存后，可设为开机启动自动加载配置
-
-✅ 关闭 E-Core 的方案（可选）
-你的机型目前BIOS 默认并不提供关闭 E-core 的选项，但你可以通过 ThrottleStop 中禁止它们参与运行：
-
-打开 ThrottleStop → TPL 标签页
-
-找到线程调度控制（如果你的版本支持）
-
-或者设置高 EPP 值+锁定低倍频（E-core倍率设为8x）作为“假性关核”
-
-彻底关闭只能通过特殊 BIOS 或 EC 工具，目前宏碁不开放此权限。
-
-✅ 总结给你
-项目	推荐值
-P-core 最大频率	4.0 GHz
-E-core 最大频率	2.4 GHz
-PL1	45W
-PL2	55W
-工具推荐	Intel XTU / ThrottleStop
-关核建议	E-core不必彻底关，限制频率即可稳定</p>
+          <p>方式一：使用 Intel XTU（推荐，简单可靠）</p>
+          <p>下载 Intel XTU：<a href="https://www.intel.com/content/www/us/en/download/17881/intel-extreme-tuning-utility-intel-xtu.html" target="_blank">点击这里</a></p>
+          <p>设置如下：</p>
+          <ul>
+            <li>Turbo Boost Power Max（PL1）：45</li>
+            <li>Turbo Boost Short Power Max（PL2）：55</li>
+            <li>Processor Core IccMax：95（默认即可）</li>
+            <li>P-core Ratio（All Cores）：40</li>
+            <li>E-core Ratio（All Cores）：24</li>
+          </ul>
+          <p>点击“Apply”，即可永久保守运行。</p>
+          <p>方式二：ThrottleStop 限频 +（可选）关 E-Core</p>
+          <p>下载：ThrottleStop 9.6</p>
+          <p>解压后运行 ThrottleStop.exe，配置如下：</p>
+          <ul>
+            <li>取消勾选“Turbo”（或者在 FIVR 里手动设置 40x/24x）</li>
+            <li>在 FIVR 里关闭“BD PROCHOT”</li>
+            <li>EPP 值设为 128~192，偏向稳定</li>
+            <li>可选：在“TPL”页面里设置 PL1=45、PL2=55</li>
+          </ul>
+          <p>保存后，可设为开机启动自动加载配置。</p>
+          <p>✅ 关闭 E-Core 的方案（可选）</p>
+          <p>你的机型目前 BIOS 默认并不提供关闭 E-core 的选项，但你可以通过 ThrottleStop 中禁止它们参与运行：</p>
+          <ul>
+            <li>打开 ThrottleStop → TPL 标签页</li>
+            <li>找到线程调度控制（如果你的版本支持）</li>
+            <li>或者设置高 EPP 值+锁定低倍频（E-core 倍率设为 8x）作为“假性关核”</li>
+          </ul>
+          <p>彻底关闭只能通过特殊 BIOS 或 EC 工具，目前宏碁不开放此权限。</p>
+          <p>✅ 总结给你</p>
+          <table>
+            <tr><th>项目</th><th>推荐值</th></tr>
+            <tr><td>P-core 最大频率</td><td>4.0 GHz</td></tr>
+            <tr><td>E-core 最大频率</td><td>2.4 GHz</td></tr>
+            <tr><td>PL1</td><td>45W</td></tr>
+            <tr><td>PL2</td><td>55W</td></tr>
+            <tr><td>工具推荐</td><td>Intel XTU / ThrottleStop</td></tr>
+            <tr><td>关核建议</td><td>E-core 不必彻底关，限制频率即可稳定</td></tr>
+          </table>
         `
       },
       2: {
@@ -144,14 +178,31 @@ PL2	55W
       }
     };
 
-    document.getElementById('article-list').addEventListener('click', function(e) {
+    const articleList = document.getElementById('article-list');
+    const contentDiv = document.getElementById('article-content');
+    const sidebar = document.getElementById('sidebar');
+
+    articleList.addEventListener('click', function(e) {
       if (e.target && e.target.nodeName === "LI") {
         const articleId = e.target.getAttribute('data-id');
         const article = articles[articleId];
-        const contentDiv = document.getElementById('article-content');
         contentDiv.innerHTML = `<h2>${article.title}</h2>${article.content}`;
+
+        // 更新活动状态
+        const items = articleList.querySelectorAll('li');
+        items.forEach(item => item.classList.remove('active'));
+        e.target.classList.add('active');
+
+        // 在移动设备上点击后隐藏侧边栏
+        if (window.innerWidth <= 768) {
+          sidebar.classList.remove('active');
+        }
       }
     });
+
+    function toggleSidebar() {
+      sidebar.classList.toggle('active');
+    }
   </script>
 </body>
 </html>
