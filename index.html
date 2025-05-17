@@ -160,11 +160,118 @@
         `
       },
       2: {
-        title: "文章标题二",
+        title: "关于主流笔记本CPU参数对比",
         content: `
-          <p>这是文章二的内容，包含一个链接到 <a href="https://www.openai.com" target="_blank">OpenAI</a> 的超链接。</p>
-          <p>下面是一张图片：</p>
-          <img src="image2.jpg" alt="示例图片" width="300">
+         <table border="1">
+  <tr>
+    <th>参数/型号</th>
+    <th>i9-14900HX</th>
+    <th>i9-13900HX</th>
+    <th>Ryzen 9 7845HX</th>
+    <th>i5-1340P</th>
+    <th>i5-12600KF</th>
+    <th>Ultra 7 265K【参照组，台式机cpu】</th>
+  </tr>
+  <tr>
+    <td>架构</td>
+    <td>Raptor Lake</td>
+    <td>Raptor Lake</td>
+    <td>Zen 4</td>
+    <td>Raptor Lake (移动低电压)</td>
+    <td>Alder Lake</td>
+    <td>Arrow Lake (台积电N3P)</td>
+  </tr>
+  <tr>
+    <td>核心/线程</td>
+    <td>8P+16E / 24核32线程</td>
+    <td>8P+16E / 24核32线程</td>
+    <td>12核24线程</td>
+    <td>4P+8E / 12核16线程</td>
+    <td>6P+4E / 10核16线程</td>
+    <td>8P+12E / 20核20线程</td>
+  </tr>
+  <tr>
+    <td>最大睿频</td>
+    <td>P核5.8GHz / E核4.1GHz</td>
+    <td>P核5.4GHz / E核3.9GHz</td>
+    <td>5.6GHz</td>
+    <td>P核4.6GHz / E核3.4GHz</td>
+    <td>P核4.9GHz</td>
+    <td>P核5.5GHz / E核4.6GHz</td>
+  </tr>
+  <tr>
+    <td>三级缓存</td>
+    <td>36MB</td>
+    <td>36MB</td>
+    <td>64MB</td>
+    <td>12MB</td>
+    <td>20MB</td>
+    <td>30MB</td>
+  </tr>
+  <tr>
+    <td>TDP</td>
+    <td>55W（最大157W）</td>
+    <td>55W</td>
+    <td>170W</td>
+    <td>25W</td>
+    <td>125W</td>
+    <td>125W（超频功耗可达310W+）</td>
+  </tr>
+  <tr>
+    <td>内存支持</td>
+    <td>DDR5-5600</td>
+    <td>DDR5-5600</td>
+    <td>DDR5-5200</td>
+    <td>DDR5-5200</td>
+    <td>DDR4-3200/DDR5-4800</td>
+    <td>DDR5-7200</td>
+  </tr>
+  <tr>
+    <td>制程工艺</td>
+    <td>Intel 7（10nm Enhanced）</td>
+    <td>Intel 7（10nm Enhanced）</td>
+    <td>5nm（台积电）</td>
+    <td>Intel 7（10nm Enhanced）</td>
+    <td>Intel 7（10nm Enhanced）</td>
+    <td>台积电N3P（3nm）</td>
+  </tr>
+  <tr>
+    <td>超频能力</td>
+    <td>支持XTU超频</td>
+    <td>支持XTU超频</td>
+    <td>支持PBO超频</td>
+    <td>不支持</td>
+    <td>支持</td>
+    <td>支持（P核最高5.7GHz+，E核5.2GHz+）</td>
+  </tr>
+  <tr>
+    <td>集成显卡</td>
+    <td>Intel UHD Graphics（14代）</td>
+    <td>Intel UHD Graphics（13代）</td>
+    <td>AMD Radeon™ 610M</td>
+    <td>Iris Xe（80EU）</td>
+    <td>无</td>
+    <td>无</td>
+  </tr>
+  <tr>
+    <td>主要应用场景</td>
+    <td>旗舰游戏本、移动工作站</td>
+    <td>高端游戏本</td>
+    <td>高性能桌面/工作站</td>
+    <td>轻薄本、商务本</td>
+    <td>中高端桌面游戏</td>
+    <td>高性能桌面/超频平台</td>
+  </tr>
+  <tr>
+    <td>特色技术</td>
+    <td>雷电5、XMP 3.0、Application Optimization</td>
+    <td>雷电4、XMP 3.0</td>
+    <td>PCIe 5.0、AMD EXPO</td>
+    <td>低功耗优化、AI加速</td>
+    <td>无超线程、高性价比</td>
+    <td>DLVR电压控制、无超线程、E核IPC提升32%</td>
+  </tr>
+</table>
         `
       },
       3: {
