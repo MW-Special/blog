@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Special — Game Highlights</title>
+  <title>Specia</title>
   <style>
     :root{--bg:#0f1724;--card:#0b1220;--accent:#8b5cf6;--muted:#9ca3af;--glass: rgba(255,255,255,0.03)}
     html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
@@ -15,12 +15,6 @@
     h1{margin:0;font-size:20px}
     p.lead{margin:0;color:var(--muted);font-size:13px}
 
-    /* controls */
-    .controls{display:flex;gap:10px;align-items:center}
-    button{background:var(--glass);border:1px solid rgba(255,255,255,0.03);color:inherit;padding:8px 12px;border-radius:8px;cursor:pointer}
-    button.primary{background:linear-gradient(90deg,var(--accent),#06b6d4);color:#021124;border:font-weight:600}
-
-    /* gallery */
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:22px}
     .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.04);box-shadow:0 6px 18px rgba(2,6,23,0.6);display:flex;flex-direction:column}
     .thumb{height:180px;background:#0b1220;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
@@ -30,28 +24,7 @@
     .title{font-weight:600;margin:8px 0 6px}
     .desc{font-size:13px;color:var(--muted);margin:0}
 
-    /* Add form modal (simple) */
-    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:24px}
-    .modal.show{display:flex}
-    .modal-panel{width:100%;max-width:760px;background:linear-gradient(180deg,#071226,#03101a);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04)}
-    label{display:block;font-size:13px;color:var(--muted);margin-top:8px}
-    input[type=text],textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;margin-top:6px}
-    textarea{min-height:100px;resize:vertical}
-    .row{display:flex;gap:10px}
-    .hint{font-size:12px;color:var(--muted);margin-top:6px}
-
-    /* uploader area */
-    .uploader{border:2px dashed rgba(255,255,255,0.04);padding:12px;border-radius:10px;display:flex;align-items:center;gap:12px;justify-content:center;min-height:120px}
-
     footer{margin-top:26px;color:var(--muted);font-size:13px;text-align:center}
-
-    /* utility */
-    .tags{display:flex;gap:8px;flex-wrap:wrap}
-    .tag{font-size:12px;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,0.03)}
-    .actions{display:flex;gap:8px}
-    .small{font-size:12px;padding:6px 8px}
-
-    @media (max-width:520px){.row{flex-direction:column}}
   </style>
 </head>
 <body>
@@ -60,227 +33,53 @@
       <div class="brand">
         <div class="logo">SP</div>
         <div>
-          <h1>Special — Game Highlights</h1>
-          <p class="lead">A single-file blog for your best gaming moments. Add photos, captions and tags — they persist in your browser.</p>
+          <h1>Special</h1>
+          <p class="lead">Special是modern warships的大佬。准确来说最早的祖师爷是来自国外的Special Week【特别周】大哥，一手阴兵召唤术成为招牌技能。国内也有两个大佬。他们分别是Special Special【特别空间】和JM 汉化组。</p>
         </div>
-      </div>
-
-      <div class="controls">
-        <button id="importBtn">Import</button>
-        <button id="exportBtn">Export JSON</button>
-        <button id="clearBtn">Clear All</button>
-        <button class="primary" id="addBtn">＋ Add Highlight</button>
       </div>
     </header>
 
     <main>
       <section style="margin-top:18px">
-        <div class="grid" id="gallery">
-          <!-- cards injected here -->
+        <div class="grid">
+          <article class="card">
+            <div class="thumb"><img src="https://A" alt="a"></div>
+            <div class="card-body">
+              <div class="title">a</div>
+              <p class="desc">这里是对 A 照片的描述。</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb"><img src="https://B" alt="b"></div>
+            <div class="card-body">
+              <div class="title">b</div>
+              <p class="desc">这里是对 B 照片的描述。</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb"><img src="https://C" alt="c"></div>
+            <div class="card-body">
+              <div class="title">c</div>
+              <p class="desc">这里是对 C 照片的描述。</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb"><img src="https://D" alt="d"></div>
+            <div class="card-body">
+              <div class="title">d</div>
+              <p class="desc">这里是对 D 照片的描述。</p>
+            </div>
+          </article>
         </div>
       </section>
 
-      <section style="margin-top:18px">
-        <p class="hint">Quick tips: Use the "Add Highlight" button to upload images (they're saved locally). To host publicly, export JSON and re-add to a hosted HTML or replace image src with online URLs.</p>
-      </section>
-
       <footer>
-        <small>Made for <strong>Special</strong>. Single-file — client-side only. Images are stored as data URLs in localStorage (size limits apply).</small>
+        <small>为 <strong>Special</strong> 制作。单文件，纯前端。使用外链图片展示。</small>
       </footer>
     </main>
   </div>
-
-  <!-- modal form -->
-  <div class="modal" id="modal">
-    <div class="modal-panel">
-      <h3 style="margin:0">Add a Highlight</h3>
-      <p class="hint">Upload one or more images; fill a title and description. Click Save to add to the gallery.</p>
-
-      <label>Images</label>
-      <div class="uploader" id="uploader">Drop files here or <button id="selectFiles" class="small">Select files</button>
-        <input id="fileInput" type="file" multiple accept="image/*" style="display:none" />
-      </div>
-      <div id="previewRow" class="row" style="margin-top:12px"></div>
-
-      <label>Title</label>
-      <input id="title" type="text" placeholder="e.g., Triple-kill at Dustfield" />
-
-      <label>Description</label>
-      <textarea id="desc" placeholder="Describe the moment, weapons used, players, etc."></textarea>
-
-      <label>Tags (comma separated)</label>
-      <input id="tags" type="text" placeholder="speedrun, clutch, snipes" />
-
-      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px">
-        <button id="cancelModal" class="small">Cancel</button>
-        <button id="saveModal" class="small primary">Save</button>
-      </div>
-    </div>
-  </div>
-
-  <input type="file" id="importFile" accept="application/json" style="display:none" />
-
-  <script>
-    // Simple client-side single-file blog
-    const STORAGE_KEY = 'special_highlights_v1';
-    const gallery = document.getElementById('gallery');
-    const modal = document.getElementById('modal');
-    const addBtn = document.getElementById('addBtn');
-    const cancelModal = document.getElementById('cancelModal');
-    const saveModal = document.getElementById('saveModal');
-    const fileInput = document.getElementById('fileInput');
-    const uploader = document.getElementById('uploader');
-    const previewRow = document.getElementById('previewRow');
-    const titleInput = document.getElementById('title');
-    const descInput = document.getElementById('desc');
-    const tagsInput = document.getElementById('tags');
-    const importBtn = document.getElementById('importBtn');
-    const exportBtn = document.getElementById('exportBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const importFile = document.getElementById('importFile');
-
-    let stagedFiles = [];
-
-    function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
-
-    function load(){
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if(!raw) return [];
-      try{return JSON.parse(raw)}catch(e){console.warn('load parse error',e);return []}
-    }
-    function save(data){localStorage.setItem(STORAGE_KEY,JSON.stringify(data))}
-
-    function render(){
-      const items = load().slice().reverse(); // newest first
-      gallery.innerHTML = '';
-      if(items.length===0){
-        gallery.innerHTML = `<div style="grid-column:1/-1;padding:38px;border-radius:12px;background:rgba(255,255,255,0.02);text-align:center;color:var(--muted)">No highlights yet — click “＋ Add Highlight” to start. Plenty of photo slots await!</div>`;
-        return;
-      }
-      items.forEach(it=>{
-        const el = document.createElement('article'); el.className='card';
-        const thumb = document.createElement('div'); thumb.className='thumb';
-        const img = document.createElement('img'); img.alt = it.title || 'highlight'; img.src = it.images[0] || '';
-        img.onerror = ()=>{thumb.textContent = 'Image failed to load'};
-        thumb.appendChild(img);
-        el.appendChild(thumb);
-        const body = document.createElement('div'); body.className='card-body';
-        const meta = document.createElement('div'); meta.className='meta';
-        const time = document.createElement('div'); time.textContent = new Date(it.createdAt).toLocaleString();
-        const act = document.createElement('div'); act.className='actions';
-        const viewBtn = document.createElement('button'); viewBtn.textContent='View'; viewBtn.className='small';
-        const delBtn = document.createElement('button'); delBtn.textContent='Delete'; delBtn.className='small';
-        act.append(viewBtn,delBtn);
-        meta.append(time,act);
-        const h = document.createElement('div'); h.className='title'; h.textContent = it.title || 'Untitled';
-        const d = document.createElement('p'); d.className='desc'; d.textContent = it.desc || '';
-        const tagRow = document.createElement('div'); tagRow.className='tags'; (it.tags||[]).forEach(t=>{const s=document.createElement('div');s.className='tag';s.textContent=t;tagRow.appendChild(s)});
-        body.append(meta,h,d,tagRow);
-        el.appendChild(body);
-        gallery.appendChild(el);
-
-        // view modal
-        viewBtn.addEventListener('click',()=>openViewer(it));
-        delBtn.addEventListener('click',()=>{
-          if(!confirm('Delete this highlight?')) return;
-          let all = load(); all = all.filter(x=>x.id!==it.id); save(all); render();
-        });
-      })
-    }
-
-    function openViewer(item){
-      // lightweight full-screen viewer
-      const overlay = document.createElement('div'); overlay.style.cssText='position:fixed;inset:0;background:rgba(2,6,23,0.9);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px';
-      const box = document.createElement('div'); box.style.cssText='max-width:1100px;width:100%;max-height:90%;overflow:auto;border-radius:10px;background:linear-gradient(180deg,#071226,#03101a);padding:16px;';
-      const h = document.createElement('h2'); h.textContent = item.title || '';
-      const p = document.createElement('p'); p.textContent = item.desc || ''; p.style.color='var(--muted)';
-      box.append(h,p);
-      const galleryInner = document.createElement('div'); galleryInner.style.cssText='display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px';
-      item.images.forEach(src=>{const i=document.createElement('img');i.src=src;i.style.cssText='width:100%;height:220px;object-fit:cover;border-radius:8px';galleryInner.appendChild(i)});
-      box.appendChild(galleryInner);
-      const close = document.createElement('div'); close.style.cssText='margin-top:12px;display:flex;justify-content:flex-end'; const cbtn=document.createElement('button'); cbtn.textContent='Close'; cbtn.className='small'; close.appendChild(cbtn); box.appendChild(close);
-      overlay.appendChild(box); document.body.appendChild(overlay);
-      cbtn.addEventListener('click',()=>overlay.remove());
-      overlay.addEventListener('click',e=>{ if(e.target===overlay) overlay.remove() });
-    }
-
-    // uploader interactions
-    addBtn.addEventListener('click',()=>{modal.classList.add('show')});
-    cancelModal.addEventListener('click',()=>{closeModal()});
-    uploader.addEventListener('click',()=>fileInput.click());
-    document.getElementById('selectFiles').addEventListener('click',(e)=>{e.stopPropagation();fileInput.click()});
-    uploader.addEventListener('dragover',e=>{e.preventDefault();uploader.style.borderColor='rgba(255,255,255,0.12)'});
-    uploader.addEventListener('dragleave',e=>{e.preventDefault();uploader.style.borderColor='rgba(255,255,255,0.04)'});
-    uploader.addEventListener('drop',e=>{e.preventDefault();uploader.style.borderColor='rgba(255,255,255,0.04)';handleFiles(e.dataTransfer.files)});
-    fileInput.addEventListener('change',e=>handleFiles(e.target.files));
-
-    function handleFiles(files){
-      const arr = Array.from(files).slice(0,12); // limit per add
-      stagedFiles = stagedFiles.concat(arr);
-      refreshPreview();
-    }
-
-    function refreshPreview(){
-      previewRow.innerHTML='';
-      stagedFiles.forEach((f,idx)=>{
-        const div = document.createElement('div'); div.style.cssText='width:120px';
-        const img = document.createElement('img'); img.style.cssText='width:120px;height:80px;object-fit:cover;border-radius:8px';
-        const rem = document.createElement('div'); rem.style.cssText='text-align:center;margin-top:6px';
-        const btn = document.createElement('button'); btn.textContent='Remove'; btn.className='small';
-        rem.appendChild(btn);
-        div.appendChild(img); div.appendChild(rem); previewRow.appendChild(div);
-        const reader = new FileReader(); reader.onload = (e)=>{ img.src = e.target.result }
-        reader.readAsDataURL(f);
-        btn.addEventListener('click',()=>{stagedFiles.splice(idx,1); refreshPreview()});
-      })
-    }
-
-    saveModal.addEventListener('click',async ()=>{
-      if(stagedFiles.length===0){alert('Please add at least one image.');return}
-      const images = [];
-      for(const f of stagedFiles){
-        // convert to dataURL, optionally resize for robustness (skipped for simplicity)
-        const data = await fileToDataURL(f); images.push(data);
-      }
-      const item = {id:uid(),title:titleInput.value,desc:descInput.value,tags:tagsInput.value.split(',').map(s=>s.trim()).filter(Boolean),images,createdAt:Date.now()};
-      const all = load(); all.push(item); save(all); closeModal(); render();
-    });
-
-    function closeModal(){modal.classList.remove('show');stagedFiles=[];previewRow.innerHTML='';titleInput.value='';descInput.value='';tagsInput.value=''}
-
-    function fileToDataURL(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)})}
-
-    // export / import
-    exportBtn.addEventListener('click',()=>{
-      const data = localStorage.getItem(STORAGE_KEY) || '[]';
-      const blob = new Blob([data],{type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href=url; a.download='special-highlights.json'; a.click(); URL.revokeObjectURL(url);
-    });
-
-    importBtn.addEventListener('click',()=>importFile.click());
-    importFile.addEventListener('change',e=>{
-      const f = e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{
-        try{const parsed = JSON.parse(r.result); if(!Array.isArray(parsed)) throw 0; save(parsed); render(); alert('Import successful.');}catch(err){alert('Invalid JSON file.')}
-      }; r.readAsText(f);
-    });
-
-    clearBtn.addEventListener('click',()=>{if(confirm('Clear all highlights from local storage?')){localStorage.removeItem(STORAGE_KEY);render()}});
-
-    // on first load, seed with a template example if empty
-    (function seed(){
-      const cur = load(); if(cur.length===0){
-        const example = [{id:uid(),title:'Clutch Finale — Rooftop',desc:'A last-second clutch with grenade jump and snipe.\nTeam cheered!',tags:['clutch','snipe'],images:['data:image/svg+xml;utf8,'+encodeURIComponent(makePlaceholderSVG('Clutch Finale — add photos'))],createdAt:Date.now()}]; save(example);
-      }
-    })();
-
-    function makePlaceholderSVG(text){
-      return `<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='700'><rect width='100%' height='100%' fill='%2302152a'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23a3b4c3' font-family='Arial' font-size='40'>${escapeXml(text)}</text></svg>`
-    }
-    function escapeXml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-
-    // initial render
-    render();
-  </script>
 </body>
 </html>
