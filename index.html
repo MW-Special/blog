@@ -1,439 +1,286 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LYC的个人博客</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Special — Game Highlights</title>
   <style>
-    :root {
-      --primary-color: #1a0dab;
-      --sidebar-bg: #f9f9f9;
-      --hover-bg: #e0e0e0;
-      --transition-speed: 0.3s;
-    }
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#8b5cf6;--muted:#9ca3af;--glass: rgba(255,255,255,0.03)}
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{background:linear-gradient(180deg,#031021 0%, #061426 60%);color:#e6eef8;padding:24px}
+    .container{max-width:1100px;margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:18px}
+    h1{margin:0;font-size:20px}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
 
-    body {
-      margin: 0;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background-color: #fff;
-      color: #333;
-    }
+    /* controls */
+    .controls{display:flex;gap:10px;align-items:center}
+    button{background:var(--glass);border:1px solid rgba(255,255,255,0.03);color:inherit;padding:8px 12px;border-radius:8px;cursor:pointer}
+    button.primary{background:linear-gradient(90deg,var(--accent),#06b6d4);color:#021124;border:font-weight:600}
 
-    .container {
-      display: flex;
-      min-height: 100vh;
-    }
+    /* gallery */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:22px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.04);box-shadow:0 6px 18px rgba(2,6,23,0.6);display:flex;flex-direction:column}
+    .thumb{height:180px;background:#0b1220;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .card-body{padding:12px}
+    .meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
+    .title{font-weight:600;margin:8px 0 6px}
+    .desc{font-size:13px;color:var(--muted);margin:0}
 
-    nav.sidebar {
-      width: 250px;
-      background-color: var(--sidebar-bg);
-      border-right: 1px solid #ccc;
-      overflow-y: auto;
-      transition: transform var(--transition-speed) ease;
-    }
+    /* Add form modal (simple) */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:24px}
+    .modal.show{display:flex}
+    .modal-panel{width:100%;max-width:760px;background:linear-gradient(180deg,#071226,#03101a);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04)}
+    label{display:block;font-size:13px;color:var(--muted);margin-top:8px}
+    input[type=text],textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;margin-top:6px}
+    textarea{min-height:100px;resize:vertical}
+    .row{display:flex;gap:10px}
+    .hint{font-size:12px;color:var(--muted);margin-top:6px}
 
-    nav.sidebar ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+    /* uploader area */
+    .uploader{border:2px dashed rgba(255,255,255,0.04);padding:12px;border-radius:10px;display:flex;align-items:center;gap:12px;justify-content:center;min-height:120px}
 
-    nav.sidebar li {
-      padding: 15px;
-      cursor: pointer;
-      border-bottom: 1px solid #ddd;
-      transition: background-color var(--transition-speed) ease;
-    }
+    footer{margin-top:26px;color:var(--muted);font-size:13px;text-align:center}
 
-    nav.sidebar li:hover,
-    nav.sidebar li.active {
-      background-color: var(--hover-bg);
-    }
+    /* utility */
+    .tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{font-size:12px;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,0.03)}
+    .actions{display:flex;gap:8px}
+    .small{font-size:12px;padding:6px 8px}
 
-    main.content {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
-    }
-
-    main.content img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    main.content a {
-      color: var(--primary-color);
-      text-decoration: none;
-    }
-
-    main.content a:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-
-      nav.sidebar {
-        width: 100%;
-        transform: translateY(-100%);
-        position: absolute;
-        z-index: 1000;
-      }
-
-      nav.sidebar.active {
-        transform: translateY(0);
-      }
-
-      .menu-toggle {
-        display: block;
-        padding: 10px;
-        background-color: var(--primary-color);
-        color: #fff;
-        text-align: center;
-        cursor: pointer;
-      }
-    }
+    @media (max-width:520px){.row{flex-direction:column}}
   </style>
 </head>
 <body>
-  <div class="menu-toggle" onclick="toggleSidebar()">菜单</div>
   <div class="container">
-    <nav class="sidebar" id="sidebar">
-      <ul id="article-list">
-        <li data-id="1" class="active">宏碁掠夺者·擎 Neo 优化指南</li>
-        <li data-id="2">主流cpu参数对比</li>
-        <li data-id="3">telegram【电报】【纸飞机】使用教程</li>
-        <li data-id="4">主流笔记本cpu参数一览</li>
-        <li data-id="5">红楼梦答案</li>
-        <li data-id="6">红楼梦答案</li>
-        <li data-id="7">旗舰CPU价目表</li>
-        <li data-id="8">文章八标题</li>
-        <li data-id="9">文章九标题</li>
-        <li data-id="10">文章十标题</li>
-      </ul>
-    </nav>
-    <main class="content" id="article-content">
-      <h2>欢迎阅读</h2>
-      <p>请选择左侧的文章标题以查看内容。</p>
+    <header>
+      <div class="brand">
+        <div class="logo">SP</div>
+        <div>
+          <h1>Special — Game Highlights</h1>
+          <p class="lead">A single-file blog for your best gaming moments. Add photos, captions and tags — they persist in your browser.</p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="importBtn">Import</button>
+        <button id="exportBtn">Export JSON</button>
+        <button id="clearBtn">Clear All</button>
+        <button class="primary" id="addBtn">＋ Add Highlight</button>
+      </div>
+    </header>
+
+    <main>
+      <section style="margin-top:18px">
+        <div class="grid" id="gallery">
+          <!-- cards injected here -->
+        </div>
+      </section>
+
+      <section style="margin-top:18px">
+        <p class="hint">Quick tips: Use the "Add Highlight" button to upload images (they're saved locally). To host publicly, export JSON and re-add to a hosted HTML or replace image src with online URLs.</p>
+      </section>
+
+      <footer>
+        <small>Made for <strong>Special</strong>. Single-file — client-side only. Images are stored as data URLs in localStorage (size limits apply).</small>
+      </footer>
     </main>
   </div>
 
+  <!-- modal form -->
+  <div class="modal" id="modal">
+    <div class="modal-panel">
+      <h3 style="margin:0">Add a Highlight</h3>
+      <p class="hint">Upload one or more images; fill a title and description. Click Save to add to the gallery.</p>
+
+      <label>Images</label>
+      <div class="uploader" id="uploader">Drop files here or <button id="selectFiles" class="small">Select files</button>
+        <input id="fileInput" type="file" multiple accept="image/*" style="display:none" />
+      </div>
+      <div id="previewRow" class="row" style="margin-top:12px"></div>
+
+      <label>Title</label>
+      <input id="title" type="text" placeholder="e.g., Triple-kill at Dustfield" />
+
+      <label>Description</label>
+      <textarea id="desc" placeholder="Describe the moment, weapons used, players, etc."></textarea>
+
+      <label>Tags (comma separated)</label>
+      <input id="tags" type="text" placeholder="speedrun, clutch, snipes" />
+
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px">
+        <button id="cancelModal" class="small">Cancel</button>
+        <button id="saveModal" class="small primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="importFile" accept="application/json" style="display:none" />
+
   <script>
-    const articles = {
-       1: {
-        title: "宏碁掠夺者·擎 Neo 优化指南",
-        content: `
-          <p>方式一：使用 Intel XTU（推荐，简单可靠）</p>
-          <p>下载 Intel XTU：<a href="https://www.intel.com/content/www/us/en/download/17881/intel-extreme-tuning-utility-intel-xtu.html" target="_blank">点击这里</a></p>
-          <p>设置如下：</p>
-          <ul>
-            <li>Turbo Boost Power Max（PL1）：45</li>
-            <li>Turbo Boost Short Power Max（PL2）：55</li>
-            <li>Processor Core IccMax：95（默认即可）</li>
-            <li>P-core Ratio（All Cores）：40</li>
-            <li>E-core Ratio（All Cores）：24</li>
-          </ul>
-          <p>点击“Apply”，即可永久保守运行。</p>
-          <p>方式二：ThrottleStop 限频 +（可选）关 E-Core</p>
-          <p>下载：ThrottleStop 9.6</p>
-          <p>解压后运行 ThrottleStop.exe，配置如下：</p>
-          <ul>
-            <li>取消勾选“Turbo”（或者在 FIVR 里手动设置 40x/24x）</li>
-            <li>在 FIVR 里关闭“BD PROCHOT”</li>
-            <li>EPP 值设为 128~192，偏向稳定</li>
-            <li>可选：在“TPL”页面里设置 PL1=45、PL2=55</li>
-          </ul>
-          <p>保存后，可设为开机启动自动加载配置。</p>
-          <p>✅ 关闭 E-Core 的方案（可选）</p>
-          <p>你的机型目前 BIOS 默认并不提供关闭 E-core 的选项，但你可以通过 ThrottleStop 中禁止它们参与运行：</p>
-          <ul>
-            <li>打开 ThrottleStop → TPL 标签页</li>
-            <li>找到线程调度控制（如果你的版本支持）</li>
-            <li>或者设置高 EPP 值+锁定低倍频（E-core 倍率设为 8x）作为“假性关核”</li>
-          </ul>
-          <p>彻底关闭只能通过特殊 BIOS 或 EC 工具，目前宏碁不开放此权限。</p>
-          <p>✅ 总结给你</p>
-          <table>
-            <tr><th>项目</th><th>推荐值</th></tr>
-            <tr><td>P-core 最大频率</td><td>4.0 GHz</td></tr>
-            <tr><td>E-core 最大频率</td><td>2.4 GHz</td></tr>
-            <tr><td>PL1</td><td>45W</td></tr>
-            <tr><td>PL2</td><td>55W</td></tr>
-            <tr><td>工具推荐</td><td>Intel XTU / ThrottleStop</td></tr>
-            <tr><td>关核建议</td><td>E-core 不必彻底关，限制频率即可稳定</td></tr>
-          </table>
-        `
-      },
-      2: {
-        title: "关于主流笔记本CPU参数对比",
-        content: `
-         <table border="1">
-  <tr>
-    <th>参数/型号</th>
-    <th>i9-14900HX【游戏cpu】</th>
-    <th>i9-13900HX【游戏cpu】</th>
-    <th>Ryzen 9 7845HX【生产力cpu】</th>
-    <th>i5-1340P【办公cpu】</th>
-    <th>i5-12600KF【游戏参照组，台式机cpu】</th>
-    <th>Ultra 7 265K【生产力参照组，台式机cpu】</th>
-  </tr>
-  <tr>
-    <td>架构</td>
-    <td>Raptor Lake</td>
-    <td>Raptor Lake</td>
-    <td>Zen 4</td>
-    <td>Raptor Lake (移动低电压)</td>
-    <td>Alder Lake</td>
-    <td>Arrow Lake (台积电N3P)</td>
-  </tr>
-  <tr>
-    <td>核心/线程</td>
-    <td>8P+16E / 24核32线程</td>
-    <td>8P+16E / 24核32线程</td>
-    <td>12核24线程</td>
-    <td>4P+8E / 12核16线程</td>
-    <td>6P+4E / 10核16线程</td>
-    <td>8P+12E / 20核20线程</td>
-  </tr>
-  <tr>
-    <td>最大睿频</td>
-    <td>P核5.8GHz / E核4.1GHz</td>
-    <td>P核5.4GHz / E核3.9GHz</td>
-    <td>5.6GHz</td>
-    <td>P核4.6GHz / E核3.4GHz</td>
-    <td>P核4.9GHz</td>
-    <td>P核5.5GHz / E核4.6GHz</td>
-  </tr>
-  <tr>
-    <td>三级缓存</td>
-    <td>36MB</td>
-    <td>36MB</td>
-    <td>64MB</td>
-    <td>12MB</td>
-    <td>20MB</td>
-    <td>30MB</td>
-  </tr>
-  <tr>
-    <td>TDP</td>
-    <td>55W（最大157W）</td>
-    <td>55W</td>
-    <td>55W（最大170W）</td>
-    <td>25W</td>
-    <td>125W</td>
-    <td>125W（超频功耗可达310W+）</td>
-  </tr>
-  <tr>
-    <td>内存支持</td>
-    <td>DDR5-5600</td>
-    <td>DDR5-5600</td>
-    <td>DDR5-5200</td>
-    <td>DDR5-5200</td>
-    <td>DDR4-3200/DDR5-4800</td>
-    <td>DDR5-7200</td>
-  </tr>
-  <tr>
-    <td>制程工艺</td>
-    <td>Intel 7（10nm Enhanced）</td>
-    <td>Intel 7（10nm Enhanced）</td>
-    <td>5nm（台积电）</td>
-    <td>Intel 7（10nm Enhanced）</td>
-    <td>Intel 7（10nm Enhanced）</td>
-    <td>台积电N3P（3nm）</td>
-  </tr>
-  <tr>
-    <td>超频能力</td>
-    <td>支持XTU超频</td>
-    <td>支持XTU超频</td>
-    <td>支持PBO超频</td>
-    <td>不支持</td>
-    <td>支持</td>
-    <td>支持（P核最高5.7GHz+，E核5.2GHz+）</td>
-  </tr>
-  <tr>
-    <td>集成显卡</td>
-    <td>Intel UHD Graphics（14代）</td>
-    <td>Intel UHD Graphics（13代）</td>
-    <td>AMD Radeon™ 610M</td>
-    <td>Iris Xe（80EU）</td>
-    <td>无</td>
-    <td>无</td>
-  </tr>
-  <tr>
-    <td>主要应用场景</td>
-    <td>旗舰游戏本、移动工作站</td>
-    <td>高端游戏本</td>
-    <td>高性能桌面/工作站</td>
-    <td>轻薄本、商务本</td>
-    <td>中高端桌面游戏</td>
-    <td>高性能桌面/超频平台</td>
-  </tr>
-  <tr>
-    <td>特色技术</td>
-    <td>雷电5、XMP 3.0、Application Optimization</td>
-    <td>雷电4、XMP 3.0</td>
-    <td>PCIe 5.0、AMD EXPO</td>
-    <td>低功耗优化、AI加速</td>
-    <td>无超线程、高性价比</td>
-    <td>DLVR电压控制、无超线程、E核IPC提升32%</td>
-  </tr>
-</table>
-        `
-      },
-      3: {
-        title: "文章标题三",
-        content: `
-          <p>在这篇文章中，我们将展示如何使用电报。</p>
-          <p>例如，点击 <a href="https://www.wikipedia.org" target="_blank">维基百科</a> 了解更多信息。</p>
-          <p>测试文本</p>
-          <img src="image3.jpg" alt="示例图片" width="250">
-          <h2>中国用户Telegram（电报）基础使用教程</h2>
+    // Simple client-side single-file blog
+    const STORAGE_KEY = 'special_highlights_v1';
+    const gallery = document.getElementById('gallery');
+    const modal = document.getElementById('modal');
+    const addBtn = document.getElementById('addBtn');
+    const cancelModal = document.getElementById('cancelModal');
+    const saveModal = document.getElementById('saveModal');
+    const fileInput = document.getElementById('fileInput');
+    const uploader = document.getElementById('uploader');
+    const previewRow = document.getElementById('previewRow');
+    const titleInput = document.getElementById('title');
+    const descInput = document.getElementById('desc');
+    const tagsInput = document.getElementById('tags');
+    const importBtn = document.getElementById('importBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const importFile = document.getElementById('importFile');
 
-<h3>1. Telegram下载安装</h3>
-<p>Telegram是一款全球流行的即时通讯软件，支持跨平台使用。中国大陆用户需要注意，由于网络限制，Telegram可能无法直接访问。</p>
-<p>请先访问官方网站下载安装：</p>
-<ul>
-  <li><a href="https://telegram.org/" target="_blank" rel="noopener">Telegram官网</a></li>
-  <li>支持Windows、Mac、Android和iOS</li>
-</ul>
-<img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram Logo" style="width:100px;"/>
+    let stagedFiles = [];
 
-<h3>2. 无法访问Telegram怎么办？</h3>
-<p>由于网络限制，国内用户可能无法直接使用Telegram。如果遇到访问问题，可以使用科学上网工具。推荐使用 <a href="https://github.com/Dreamacro/clash" target="_blank" rel="noopener">Clash</a>，这是一个开源代理客户端。</p>
-<p>Clash的下载与使用教程请访问其GitHub页面，设置好代理后即可正常访问Telegram。</p>
+    function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 
-<h3>3. Telegram注册与登录</h3>
-<p>打开Telegram，输入手机号码进行注册。请注意：</p>
-<ul>
-  <li>中国大陆手机号码需加<span style="color:red;">+86</span>国际区号，如+86 138xxxxxxx</li>
-  <li>部分用户反馈+86号码注册失败，可以尝试使用以下方法：</li>
-  <ul>
-    <li>使用非+86的虚拟号码（部分网络提供）</li>
-    <li>更换国际区号，比如+852（香港）、+886（台湾）等</li>
-    <li>等待官方验证码短信，有时需要多次尝试</li>
-  </ul>
-</ul>
-<img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram注册" style="width:150px;"/>
+    function load(){
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return [];
+      try{return JSON.parse(raw)}catch(e){console.warn('load parse error',e);return []}
+    }
+    function save(data){localStorage.setItem(STORAGE_KEY,JSON.stringify(data))}
 
-<h3>4. 如何切换Telegram为中文界面</h3>
-<p>Telegram默认英文，切换中文步骤：</p>
-<ol>
-  <li>打开Telegram，点击左上角菜单（三条横线图标）</li>
-  <li>选择 <strong>Settings（设置）</strong></li>
-  <li>点击 <strong>Language（语言）</strong></li>
-  <li>从列表中选择 <strong>简体中文</strong></li>
-</ol>
-<img src="https://telegram.org/img/tg_lang.png" alt="切换语言" style="width:300px;"/>
+    function render(){
+      const items = load().slice().reverse(); // newest first
+      gallery.innerHTML = '';
+      if(items.length===0){
+        gallery.innerHTML = `<div style="grid-column:1/-1;padding:38px;border-radius:12px;background:rgba(255,255,255,0.02);text-align:center;color:var(--muted)">No highlights yet — click “＋ Add Highlight” to start. Plenty of photo slots await!</div>`;
+        return;
+      }
+      items.forEach(it=>{
+        const el = document.createElement('article'); el.className='card';
+        const thumb = document.createElement('div'); thumb.className='thumb';
+        const img = document.createElement('img'); img.alt = it.title || 'highlight'; img.src = it.images[0] || '';
+        img.onerror = ()=>{thumb.textContent = 'Image failed to load'};
+        thumb.appendChild(img);
+        el.appendChild(thumb);
+        const body = document.createElement('div'); body.className='card-body';
+        const meta = document.createElement('div'); meta.className='meta';
+        const time = document.createElement('div'); time.textContent = new Date(it.createdAt).toLocaleString();
+        const act = document.createElement('div'); act.className='actions';
+        const viewBtn = document.createElement('button'); viewBtn.textContent='View'; viewBtn.className='small';
+        const delBtn = document.createElement('button'); delBtn.textContent='Delete'; delBtn.className='small';
+        act.append(viewBtn,delBtn);
+        meta.append(time,act);
+        const h = document.createElement('div'); h.className='title'; h.textContent = it.title || 'Untitled';
+        const d = document.createElement('p'); d.className='desc'; d.textContent = it.desc || '';
+        const tagRow = document.createElement('div'); tagRow.className='tags'; (it.tags||[]).forEach(t=>{const s=document.createElement('div');s.className='tag';s.textContent=t;tagRow.appendChild(s)});
+        body.append(meta,h,d,tagRow);
+        el.appendChild(body);
+        gallery.appendChild(el);
 
-<h3>5. 如何加好友和加入群组</h3>
-<p>Telegram有两种主要的互动方式：添加联系人和加入群组。</p>
-<ul>
-  <li><strong>添加好友：</strong>点击右上角放大镜图标，输入对方的用户名（格式：@用户名），搜索后发送好友请求。</li>
-  <li><strong>加入群组：</strong>获取群组邀请链接或群组ID，点击链接或搜索群组名称加入。</li>
-</ul>
-<p>如果你不知道群组链接，可以通过GitHub或其他平台找到相应项目，再找联系方式加入。</p>
-
-<hr>
-
-<h2>GitHub账号注册及通过GitHub找到Telegram群组</h2>
-
-<h3>1. 注册GitHub账号</h3>
-<p>GitHub是全球最大的开源代码托管平台，很多项目会在这里发布及交流。</p>
-<ol>
-  <li>访问 <a href="https://github.com/join" target="_blank" rel="noopener">GitHub注册页面</a></li>
-  <li>填写用户名、邮箱、密码，完成验证</li>
-  <li>激活邮箱后即可使用账号</li>
-</ol>
-<img src="https://github.githubassets.com/images/modules/site/sign-in-github.png" alt="GitHub注册" style="width:300px;"/>
-
-<h3>2. 在GitHub上寻找项目及Telegram联系方式</h3>
-<ol>
-  <li>登录GitHub，在搜索栏输入你感兴趣的项目名称或关键词</li>
-  <li>进入项目主页后，通常README.md文件里会包含项目介绍及联系方式</li>
-  <li>查找“Telegram”或“TG”相关的联系方式或群组邀请链接</li>
-  <li>点击链接即可跳转到Telegram，完成加群操作</li>
-</ol>
-<img src="https://docs.github.com/assets/images/help/repository/repo-overview.png" alt="GitHub项目页面" style="width:400px;"/>
-
-<h3>总结</h3>
-<ul>
-  <li>国内用户先准备好科学上网工具，如Clash</li>
-  <li>注册Telegram时注意手机号区号问题</li>
-  <li>登录后切换中文界面方便使用</li>
-  <li>通过GitHub找到项目及官方Telegram群组，参与讨论</li>
-</ul>
-
-<p>希望这份教程对你有所帮助，祝你顺利使用Telegram和GitHub！</p>` },
-      4: { title: "主流笔记本cpu参数一览", content: `<p><p>欢迎各位积极贡献各种笔记本cpu-z截图</p>
-          <p>排名不分先后</p>
-          <p>14900KF【台式机参照组】</p>
-          <img src="https://valid.x86.fr/cache/screenshot/qsu3g5.png" alt="HX" width="300">
-          <p>9955HX3D</p>
-          <img src="https://raw.githubusercontent.com/laptop-14lyc/blog/refs/heads/main/640.webp" alt="HX" width="300">
-          <p>7945HX</p>
-          <img src="https://valid.x86.fr/cache/screenshot/xesgum.png" alt="HX" width="300">
-          <p>14900HX</p>
-          <img src="https://valid.x86.fr/cache/screenshot/fyahqi.png" alt="HX" width="300">
-          <p>13900HX</p>
-          <img src="https://valid.x86.fr/cache/screenshot/gykr1j.png" alt="HX" width="300">
-          <p>7845HX</p>
-          <img src="https://github.com/laptop-14lyc/blog/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-05-17%20170740.png?raw=true" alt="HX" width="300">
-          <p>12900HX</p>
-          <img src="https://github.com/laptop-14lyc/blog/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-05-18%20103044.png?raw=true" alt="HX" width="300">
-          <p>5950HX</p>
-          <img src="https://valid.x86.fr/cache/screenshot/2gzx90.png" alt="HX" width="300">
-          <p>13950HX</p>
-          <img src="https://valid.x86.fr/cache/screenshot/7jnp4m.png" alt="7HX" width="300">
-          <p>9980HK</p>
-          <img src="https://valid.x86.fr/cache/screenshot/ruaklh.png" alt="HS" width="300">
-          <p>7995WX</p>
-          <img src="https://valid.x86.fr/cache/screenshot/jcju1r.png" alt="H" width="300">
-          <p>	Cyrix 6x86MX-PR200 </p>
-          <img src="https://valid.x86.fr/cache/screenshot/ztkxi7.png" alt="HX" width="300">
-          <p>	Cyrix 4500U </p>
-          <img src="https://img.onlinedown.net/download/202307/165014-64a28bc67bd2a.png" alt="HX" width="300">
-          <p>	Cyrix 3220M </p>
-          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiA7QF0Nae1PTLZcBavKkg_sZG8Vng5-NFXrB9VKFv4aEj1HM9GRHs3odaCVa9VmqIcGuncexj1aaP26ZpmPX5NwH7sCfZVOa2OKErVXRKDDSDlzKgQtNII3mTgImUsHbXearDYx3_zTW6j/s1600/%EB%A0%88%EB%85%B8%EB%B2%84+g580++CPU-Z+01.jpg" alt="HX" width="300">
-          <p>155H </p>
-          <img src="https://i2hard.ru/upload/sprint.editor/026/2r8xuspjs3tm3x8zfci7qfq9zd0py0i5.jpg" alt="HX" width="300"> 
-          <p>185H </p>
-          <img src="https://github.com/laptop-14lyc/blog/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-05-18%20102818.png?raw=true" alt="HX" width="300">
-          <p>1340P</p>
-          <img src="https://github.com/laptop-14lyc/blog/blob/main/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250517225438.png?raw=true" alt="P" width="300"></p>` },
-      5: { title: "content", content: `根据你上传的图片内容，以下是每道题的填空答案：<br>________________________________________<br>1.
-贾芸多次求贾珍安排差事，进贾府询问，见了宝玉，百般逢迎。贾琏告知有个差事，不意被凤姐安排贾芸抢了先。贾芸得知贾琏家中，便准备买些香料贿赂凤姐，找亲娘舅勇借钱不得，多亏醉金刚倪二仗义。贾芸说话得体，将香料赠予凤姐，谋得种树的差事。<br>________________________________________<br>2.
-贾芸去找宝玉不遇，宝玉房里的次等丫鬟小红接待，互有心意。宝玉身边的丫鬟不在，她为宝玉倒茶，却被袭人一顿数落。<br>________________________________________<br>3.
-宝玉嫌若烟的“烟”字不好，改了叫晴雯。<br>________________________________________<br>4.
-小红本姓林，小名红玉，因犯了宝玉、黛玉的名，便改唤她“小红”。<br>________________________________________<br>5.
-贾芸的舅舅卜世仁名字的谐音是不是人。<br>________________________________________<br>如需详细出处或原文背景，可以继续告诉我。<br><br><br>以下是你提出的《红楼梦》相关问题的详细解答，均围绕第二十四回及相关内容展开：<br>________________________________________<br>1. 简述“醉金刚轻财尚义侠”的故事情节：<br>“醉金刚”指的是贾府下人倪二。他虽然是个粗人，但重义气、轻财利，行为仗义。贾芸想给王熙凤送礼以求得差事，但手头拮据、无钱购买香料。贾芸向亲戚借钱无果，情急之下找到倪二。倪二听后，不仅没有讥笑他，反而爽快地借钱给他，并表示“只要你有用的着的，尽管说话”。这一段展现出倪二虽为下层人物，却性情豪爽、重情重义的可贵品质。<br>________________________________________<br>2. 简述贾芸贿赂王熙凤，王熙凤为他安排差事的故事情节：<br>贾芸多次向贾珍请求安排差事无果。一次偶然，他在贾府见到了宝玉，通过搭话和送礼逐步拉近关系。得知凤姐掌管中馈，便借倪二之钱，买了些香料，通过宝玉暗中送给凤姐。凤姐见礼也不拒，还感慨他“会说话、有礼数、有眼力”，于是安排他参与栽种花木的差事。这段情节表现了凤姐权力之大，也揭示了贿赂在人情社会中的实际作用。<br>________________________________________<br>3. 简述“痴女儿遗帕惹相思”的故事情节：<br>“痴女儿”指的是小红。宝玉去探望贾芸未遇，遇到小红接待。两人一见如故、互有好感。分别时，小红有意将手帕落在宝玉身边，暗藏情意。宝玉发现后心生惦念，这块“遗帕”成了两人情感的象征。这段故事细腻描写了少女暗恋的心思与方式，展现了小红的灵气与初恋般的情愫。<br>________________________________________<br>4. 《红楼梦》第二十四回中真实描写下层小人物，反映广阔社会现实的例子：<br>倪二：虽为下层粗人，却重义轻财，表现出民间侠义精神。<br>贾芸：地位卑微但有志向，为谋生计费尽心机，不得不行贿求人，反映出封建社会下层青年的生存压力。<br>小红：小丫鬟，身份低微却聪明伶俐，渴望爱慕，表现了封建社会女性情感世界的真实面貌。<br>通过这些人物，《红楼梦》呈现出封建贵族家庭内部森严等级制度对下层人物命运的压迫与制约。<br>________________________________________<br>5. 试分析小红的形象：<br>小红是宝玉房中的次等丫鬟，虽地位低微，但聪明灵秀、懂得察言观色。她在宝玉面前表现得得体大方，有眼力劲儿。对宝玉暗生情愫，却因身份悬殊而不敢表露，只能借“遗帕”寄托情思。小红有野心，期望借近宝玉上位，是个有情感、有追求的典型下层女子形象。她既有少女的痴情，又不失灵巧与机变，代表着封建制度下小人物复杂的心理与生存状态。<br>________________________________________<br>如需整理成答题格式或写成作文体裁，也可以告诉我，我来帮你润色。<br>根据你上传的图片内容，以下是每道题的填空答案：<br>________________________________________<br>1.
-王夫人命贾环抄《金刚咒》，贾环拿腔作势。众丫鬟们素日庆恶贾环，都不睬理。只有彩云还和他合得来，劝他安分些。<br>________________________________________<br>2.
-宝玉浑伤，袭人便赶着来看，宝玉知道她的癖性喜洁，不肯叫她看。<br>________________________________________<br>3.
-赵姨娘和周姨娘两个人进来看宝玉，众人都让她两个坐，独宝玉正眼也不看她们。<br>________________________________________<br>如需更多解析或出处，欢迎继续提问。<br>以下是你问题的详细解答，内容涉及《红楼梦》中贾环、赵姨娘、马道婆的阴谋，以及宝玉受伤后的两位女主反应：<br>________________________________________<br>1. 贾环为何故作失手，将烛油泼在宝玉脸上？<br>贾环一直嫉妒贾宝玉的地位与宠爱。王夫人命贾环抄写《金刚咒》为宝玉祈福，贾环本就不情不愿。在王夫人离开后，贾环趁夜点灯故意装作失手，将烛油泼在宝玉脸上，导致宝玉被严重灼伤。表面上是“失手”，实际上是借机报复、陷害宝玉，表现出他心胸狭隘、性格阴险的特点。<br>________________________________________<br>2. 简述赵姨娘与马道婆设计陷害凤姐、宝玉的故事情节：<br>赵姨娘身为贾政的妾，因地位低下、长期受打压，心中怀恨。她勾结巫婆马道婆，希望通过邪术咒死凤姐与宝玉，好让自己儿子贾环有机会出头。马道婆用草人施法，并将之藏于王熙凤居所。宝玉随后重病不醒，凤姐也突然患病，贾府大惊。后来草人偶然被发现，真相曝光，马道婆被捕，赵姨娘被严厉训斥。此事揭示了后宅斗争的狠毒，也反映出封建社会女性在压抑中可能采取的极端方式。<br>________________________________________<br>3. 试比较宝玉醒来后黛玉和宝钗的反应：<br>黛玉：得知宝玉醒来后，喜极而泣，情绪激动，泪流满面，表现出她情感真挚、爱得深切。这种反应出于她长期的敏感、多疑与深爱，更富有个人情感色彩。<br>宝钗：则表现得稳重克制，虽然心中同样关切，但外在反应得体冷静，符合她一贯的端庄理性形象。她用理智安慰众人，劝大家保重身体，更具长嫂风范。<br>对比总结：黛玉的反应情真意切，情感直接；宝钗的反应理性含蓄，重视大局。这一情节加深了二人性格与爱情观的对比，也成为日后“黛钗之争”的人物伏笔。<br>________________________________________<br>如需将这些答案整理成考试答题格式或精炼表述，也可告诉我。<br>好的，让我们来一起看看图片中的问题。<br>一、填空题<br>一日，宝玉信步来到潇湘馆，在窗外听到黛玉说了一句：“”。不觉心痒， 也引了《西厢记》中“若共你多情小姐同鸳帐，怎舍得叠被铺床”之语同黛玉玩笑。二人正闹， 借  之名将湘馆玩的宝玉骗出门去，在薛家玩乐一天。袭人和黛玉为此担心。黛玉  晚上到怡红院探看宝玉。由于  和  拌嘴气了，正闷牌气，且又没有听清宝玉的声音，烦躁得很，没有开门。这不禁动了黛玉身世之悲，开始悲戚感叹，吟哦起来，黛玉正在悲泣时，忽然听见院门一响，接着宝玉、袭人等送了  出来。自己更觉无趣，直到二更多天才睡下。<br>根据《红楼梦》的情节，黛玉在潇湘馆外常吟诵诗句。结合后文宝玉所引的《西厢记》，黛玉当时所说的应是《西厢记》中的句子。因此，第一个空可以填“每日家情思睡昏昏”。<br>宝玉听到后心生爱慕之情，也用《西厢记》中的话来逗她，所以第二个空可以填“宝玉听了”。<br>接下来描写的是宝钗的行动，她借故将宝玉骗走，所以第三个空可以填“宝钗”，第四个空可以填“看金钏”。<br>黛玉晚上去看宝玉，因为白天的事情和宝玉、袭人拌嘴生气，所以第五个空可以填“独自一人”，第六个空可以填“白天的事”，第七个空可以填“袭人”。<br>最后，宝玉和袭人将送谁出来呢？根据前后文，应该是送探望宝玉的黛玉出来，所以第八个空可以填“黛玉”。<br>完整答案： 一日，宝玉信步来到潇湘馆，在窗外听到黛玉说了一句：“每日家情思睡昏昏”。不觉心痒，宝玉听了 也引了《西厢记》中“若共你多情小姐同鸳帐，怎舍得叠被铺床”之语同黛玉玩笑。二人正闹，宝钗 借 看金钏 之名将湘馆玩的宝玉骗出门去，在薛家玩乐一天。袭人和黛玉为此担心。黛玉 独自一人 晚上到怡红院探看宝玉。由于 白天的事 和 袭人 拌嘴气了，正闷牌气，且又没有听清宝玉的声音，烦躁得很，没有开门。这不禁动了黛玉身世之悲，开始悲戚感叹，吟哦起来，黛玉正在悲泣时，忽然听见院门一响，接着宝玉、袭人等送了 黛玉 出来。自己更觉无趣，直到二更多天才睡下。<br>薛蟠通过  骗宝玉出来吃他生日的酒、螃蟹、、、，还闹出了把“”说成“”的笑话。<br>根据《红楼梦》的情节，薛蟠经常用请客吃饭的理由来和宝玉等人交往。他请客的目的是为了庆祝自己的生日，并准备了螃蟹等美食。<br>薛蟠在请客时，因为不识字，将“女儿”说成了“忘八”，闹出了笑话。<br>因此，第一个空可以填“请客”，第二个空填“女儿”，第三个空填“忘八”。至于中间的食物，原文中提到的是“螃蟹”，其他的可以根据情理补充一些时令的菜肴，例如“桂圆”、“菱角”、“榛子”。<br>完整答案： 薛蟠通过 请客 骗宝玉出来吃他生日的酒、螃蟹、桂圆、菱角、榛子，还闹出了把“女儿”说成“忘八”的笑话。<br>神武将军冯唐之子  ，性格豪爽，曾摔掉冯敬替他挪树的儿子，是曹雪芹钦佩中所谓的四侠之一。<br>根据《红楼梦》的情节，贾府的护卫贾蔷是宁国府的正派玄孙，虽然辈分低，但他是曹雪芹钦佩的四侠之一，性格豪爽，并且曾经因为冯敬的儿子挪动了他种的树而将其摔伤。<br>完整答案： 神武将军冯唐之子 贾蔷 ，性格豪爽，曾摔掉冯敬替他挪树的儿子，是曹雪芹钦佩中所谓的四侠之一。<br>二、简答题<br>“娇杏腰舟误传言”，简述贾雨村和小红传情的过程。<br>“娇杏腰舟误传言”指的是贾雨村在葫芦庙落难时，曾得到甄士隐家丫鬟娇杏的两次回顾。娇杏这两次回头，本是无意之举，但在贾雨村看来，却是她对自己有意。后来贾雨村发迹，便娶了娇杏为妾，并改名为“秋桐”。<br>至于贾雨村和小红的传情，原文中并没有直接描写他们之间有任何私情。小红是林黛玉房中的丫鬟，后来被王熙凤看中调到了自己身边。她与贾芸之间发展出了感情线。因此，“娇杏腰舟误传言”和贾雨村、小红的传情是两件不同的事情。<br>答案： “娇杏腰舟误传言”指的是贾雨村落难时，甄士隐家的丫鬟娇杏无意中两次回头看了他，贾雨村误以为她对自己有意，后来娶她为妾。贾雨村和小红之间并没有传情的情节。小红是林黛玉的丫鬟，后成为王熙凤的得力助手，并与贾芸相恋。<br>希望这些解答能够帮到您！<br>好的，我们来分析一下图片中的问题。<br>2. 本回后半部分写薛蟠邀请宝玉、冯紫英等过生日的事有什么作用？<br>《红楼梦》中的情节和人物描写往往具有多重作用。本回后半部分描写薛蟠邀请宝玉、冯紫英等人过生日，至少有以下几个方面的作用：<br>展现薛蟠的性格特点： 通过描写他如何张罗生日宴请，以及宴席上的热闹场面，可以更生动地展现薛蟠的豪爽、好客（尽管有时显得粗俗）、以及挥金如土的纨绔子弟形象。他热衷于社交，也希望通过宴请来维系和扩展自己的人际关系。<br>推动情节发展： 这场生日宴请为宝玉等人的社交活动提供了一个场景，也可能在此过程中发生一些新的事件或埋下伏笔，推动故事的 आगे 发展。例如，宴会上的人物互动、言语交流等都可能对后续情节产生影响。<br>侧面烘托贾府的社会环境和生活氛围： 通过描写薛蟠的宴请，可以反映出当时社会上富家子弟的生活状态和社交方式，也从侧面烘托出贾府所处的奢华享乐的社会环境。<br>对比不同人物的性格和处世态度： 在宴会上，宝玉、冯紫英等人的表现与薛蟠可能会形成对比，从而更突出各自的性格特点和处世态度。例如，宝玉可能对这种热闹的场面并不十分热衷，而冯紫英则可能更加圆滑世故。<br>为后续情节做铺垫： 宴会上发生的一些看似不经意的事情，例如人物之间的对话、行为举止等，可能为后续情节的发展埋下伏笔。<br>总而言之，薛蟠邀请宝玉等人过生日的情节，不仅仅是为了描写一个热闹的场面，更是为了塑造人物、推动情节、反映社会环境以及为后续故事发展做铺垫。<br>3. 阅读下面的文段，依据相关情节回答后面的问题。<br>林黛玉听了，不觉怔在门外。待要高声问他，忍着气走上来。自己又回头思一番：“果然是这等！往日也曾见过他二人亲厚异常，今日看来，竟是如此。可见天下竟有这等糊涂人！自己吃了人家一点子亏，只见得人家的错处竟没了自己的是非了。如今他既和人好了，越发不把我放在眼里了！⋯⋯我虽死了，原是没了家的，如今连他也没了！”一面想着，一面又滚下泪珠来。<br>《红楼梦》中常常借景物描写增添情节波澜，反映人物心情。本回写黛玉探望宝玉，叫门不应，以致伤感落泪。试简述这件事的来龙去脉，并分析此处黛玉表现出的性格特点。<br>这件事的来龙去脉：<br>这件事发生在宝玉和薛宝钗在薛姨妈处一起吃饭后。黛玉晚上来看望宝玉，走到怡红院叫门，但是里面没有人应声。黛玉想到白天宝玉和宝钗亲密的情景，又联想到自己孤苦无依的身世，觉得宝玉也疏远了自己，心中十分伤感，因此在门外独自落泪。<br>此处黛玉表现出的性格特点：<br>心思细腻，多愁善感： 黛玉非常敏感，她从宝玉和宝钗的亲近举动以及无人应门这件事上，就联想到了自己被冷落，可见其心思之细腻。她很容易因外界的刺激而产生悲伤的情绪，体现了她多愁善感的性格特点。<br>孤高自许，缺乏安全感： 黛玉的身世飘零，寄人篱下，这使得她内心深处缺乏安全感。她非常看重宝玉对自己的情谊，一旦感受到一丝疏离，就会觉得失去了依靠。她也有一种孤高自许的清高，不轻易向人表露心迹，独自承受内心的伤感。<br>醋意和敏感： 黛玉对宝玉有着特殊的感情，看到宝玉和宝钗亲近，她会产生醋意。这种醋意源于她对宝玉的重视和对自身地位的不确定感。<br>自我怜惜： 黛玉常常会联想到自己的不幸身世，将外在的遭遇与自身的命运联系起来，产生强烈的自我怜惜之情。她觉得自己无家可归，如今连宝玉也似乎离她而去，更加重了她的悲凉感。<br>内向含蓄： 黛玉虽然内心波涛汹涌，但她并没有立刻高声询问或闯进去，而是选择在门外独自伤心，这体现了她内向含蓄的性格特点。她更倾向于将情绪压抑在心底，独自消化。<br>总的来说，此处黛玉的描写深刻地展现了她心思细腻、多愁善感、孤高自许、缺乏安全感、敏感多疑以及内向含蓄的性格特点，也为她和宝玉之间复杂的情感关系埋下了伏笔。<br><br><br>
-` },
-      6: { title: "红楼梦666答案", content: `<p>好的，这是您所有题目的详细版本答案。<br>________________________________________<br>第一部分 (c39a230212933adab7cd71c276f4c1f.jpg) 详细答案：<br>袭人诱宝玉为他买好字画，轻巧地盘儿等，允许他给宝玉做鞋。宝玉说她做的鞋引 晴雯剪鞋样 之事。有评者说作者写这活削除，是“闲敲数般的的见识”，说她“伏沓的的不像了”。<br>详细解释： 袭人为了讨好宝玉，也为了稳固自己在怡红院的地位，主动提出为宝玉买好字画等物，并表示愿意给他做鞋。然而，她做的鞋子尺寸不合，宝玉拿给丫鬟们看，引来了晴雯的嘲讽和当场剪鞋样。这在批者看来，是作者闲笔，却也反映了袭人表面顺从，实则心机深沉的一面，而晴雯的直率与叛逆也在此处得以体现。<br>本回中“戏彩蝶”的是宝钗，为何称她为“柳絮”？简述“戏彩蝶”的故事情节。<br>详细解释： 称宝钗为“柳絮”是因为柳絮轻盈飘荡，无拘无束，用来比喻宝钗在扑蝶时的自在与洒脱。故事情节是，宝钗在大观园中扑蝶玩耍，偶然走到滴翠亭外，听到小红和坠儿在说私房话，提到了贾宝玉。宝钗本可以揭穿，但她急中生智，谎称是黛玉在里面，巧妙地化解了尴尬，避免了可能引发的冲突，展现了她的圆滑和周全。<br>简述小红为凤姐传话的故事情节。<br>详细解释： 小红因偶然机会得到了替凤姐传话的机会。她通过伶俐的口齿、得体的举止，将凤姐的吩咐准确无误地传达给平儿，并巧妙地周旋于各种人际关系中。她的表现得到了凤姐的赏识和平儿的肯定，这使得她在怡红院的丫鬟中逐渐崭露头角，为她日后的发展奠定了基础。<br>简述黛玉葬花的故事情节。<br>详细解释： 黛玉在宝玉生日宴上感受到被排挤，独自回到潇湘馆，又听到宝玉和宝钗的对话，心中感到无限悲凉。恰逢暮春时节，园中落英缤纷，黛玉便将落花收集起来，用花冢将其埋葬。她边葬花边流泪，并吟诵《葬花词》，借落花喻自身飘零的命运，抒发了对生命短暂、爱情无望的深沉悲哀和对世事无常的感叹。<br>________________________________________<br>第二部分 (fd5f2839c89e00970794941a763256e.jpg) 详细答案：<br>《葬花词》是《红楼梦》中的重要诗词，你是怎样理解的？<br>详细解释： 《葬花词》是林黛玉的代表性诗词，通过她对落花的怜惜与埋葬，深刻表达了她对自身悲剧命运的预感、对青春易逝的感伤、对爱情无望的绝望。这首词不仅展现了黛玉敏感多愁、才华横溢的性格，更是全书悲剧色彩的重要体现，预示着金陵十二钗，尤其是黛玉最终的悲惨结局。<br>《红楼梦》曾在第十三回和第十七回先后两次描写林黛玉葬花。黛玉葬花的原因外因各有什么寓意？<br>详细解释： 黛玉两次葬花的外在原因有所不同。第一次（实际上是第二十七回）是她因宝玉生日宴上感受到被冷落，以及听到宝玉和宝钗的亲近而心生悲凉，此时园中落花加重了她的哀愁。第二次（实际上是第二十八回后）黛玉葬花则是在她与宝玉闹矛盾后，心情更加郁结。两次葬花的共同寓意在于，黛玉借对落花的怜惜，抒发自己寄人篱下、孤苦无依的悲凉心境，以及对美好事物（包括她的爱情）必然走向消逝的悲观预感，象征着她青春的凋零和生命的衰败。<br>________________________________________<br>第三部分 (2d27af902979b0f36d4a9e9d5ac89b3.jpg) 详细答案：<br>宝玉因《葬花词》而感伤不已，哭声惊动了黛玉，黛玉劝慰宝玉，又复解开了病宝玉心结。宝玉遂与黛玉二人 赏花，填词，对句，与宝玉互有同感，兴之所至齐作《悲愁喜乐解》并 各赋诗一首，互赠诗作。<br>详细解释： 宝玉读了《葬花词》后感伤落泪，黛玉见状非但没有生气，反而心疼地劝慰他，并解开了宝玉的心结，两人重归于好。他们一同赏花、填词、对句，兴致所至，还各自赋诗，并互赠诗作，表现了两人心意相通、情投意合的深厚感情。<br>别离。贾政 给众人题赠之物，只有宝玉和 宝钗 的完全一样，贾宝玉 不受，王夫人。<br>详细解释： 贾政给众人题赠礼物时，宝玉和宝钗得到的礼物是一模一样的。但宝玉对此并不在意，甚至有些不屑一顾，而王夫人作为家长，则对宝玉的行为感到不满。<br>见到宝钗，看她的红麝串子，宝钗提醒宝玉，宝玉看得出神，宝钗忙着溜走。与谁 薛宝钗 看见。<br>详细解释： 宝玉见到宝钗，被她手腕上的红麝串子吸引，看得入神。宝钗发现宝玉的目光后，感到有些尴尬，便借口有事，匆匆离开了。这段描写暗示了宝钗对宝玉的特殊情谊，也展现了她面对情感时的谨慎与内敛。<br>王夫人问黛玉吃了药可好些，都忘了药的名字。 袭人 提醒是“天王补心丹”， 宝钗。<br>详细解释： 王夫人关心黛玉的病情，询问她吃的药效果如何，却一时想不起药名。这时，袭人提醒是“天王补心丹”。宝钗也表现出对黛玉的关心。<br>宝玉说袭人方说的是薛蟠给的 金钏儿，玉钏儿，宝玉。<br>详细解释： 这句话上下文有误。此处应指金钏儿因与宝玉亲近被王夫人打骂并赶走，玉钏儿是金钏儿的妹妹，宝玉因此事感到内疚。<br>冯紫英设宴， 贾宝玉，薛蟠，柳湘莲，冯紫英。<br>详细解释： 冯紫英在家中设宴款待朋友，参加宴会的有贾宝玉、薛蟠、柳湘莲和冯紫英本人。这是《红楼梦》中重要的交际场合，通过这次宴会，展现了不同人物的性格和相互关系。<br>冯紫英设宴，闻问 蒋玉菡 说出“花气袭人知昼暖”的诗句暗示了其与袭人的瓜葛。<br>详细解释： 在冯紫英的宴席上，蒋玉菡无意中说出了“花气袭人知昼暖”这句诗。而“袭人”正是贾宝玉身边大丫鬟的名字，这句诗暗示了蒋玉菡与袭人之间存在着某种不为人知的联系或缘分。<br>简述落红情僧痴看曹雪芹的故事情节。<br>详细解释： “落红情僧痴看曹雪芹”并非书中具体情节，而是《红楼梦》批语中对作者曹雪芹创作状态的一种描绘。它指的是曹雪芹在创作《红楼梦》时，投入了极大的情感和精力，如同痴僧入定般沉醉其中，字字泣血，句句含泪，笔耕不辍，达到忘我境界，以至于对书稿废寝忘食地修改增删，才有了这部呕心沥血的巨著。<br>________________________________________<br>第四部分 (70ae88dd30d8b173fb1bacaa6a27a2e.jpg) 详细答案：<br>冯紫英设宴，席间 蒋玉菡 说出“花气袭人知昼暖”的诗句暗示了其与袭人的姻缘。<br>详细解释： 在冯紫英的宴会上，蒋玉菡吟出“花气袭人知昼暖”的诗句，这句诗的后半句恰巧呼应了贾宝玉的丫鬟“袭人”的名字。这暗示了蒋玉菡与袭人之间有着某种特殊缘分，为他们未来的结合埋下伏笔。<br>简述落红情僧痴看曹雪芹的故事情节。“茜香罗”有怎样的暗示？<br>详细解释： “落红情僧痴看曹雪芹”是脂砚斋批语中形容曹雪芹创作《红楼梦》时投入忘我的境界，他字字泣血，痴迷于作品的增删修改。而“茜香罗”是宝玉和蒋玉菡互相交换的信物，暗示了宝玉与蒋玉菡之间独特的友情，以及他们性情相投，不受世俗礼教束缚的特点。<br>简述“薛宝钗送红麝串”的故事情节前因、经过、结果。“红麝串”有什么暗示？<br>详细解释： 前因： 在宝玉生日期间，薛宝钗为了表示心意，特意准备了一件礼物。 经过： 宝钗将自己珍藏的红麝串送给了宝玉，宝玉非常喜欢，戴在了手上。这一幕被恰巧路过的林黛玉看见。 结果： 黛玉看到宝玉佩戴宝钗的红麝串后，心生醋意和猜忌，加深了她对宝钗的芥蒂，也使得宝黛之间的感情更加复杂和敏感。 “红麝串”的暗示： 红麝串象征着吉祥和喜庆，宝钗送给宝玉，既是对宝玉的关心和笼络，也暗含了“金玉良缘”的伏笔，预示着宝钗与宝玉的婚配可能性，这与宝黛“木石前盟”形成了对比。<br>________________________________________<br>第五部分 (4bd45836da2ac8c49cfae61b52b5e3d.jpg) 详细答案：<br>简述“龄官划蔷痴及局外”的故事情节。她为何要“划蔷”？“痴及局外”作何理解？ <br>详细解释： 故事情节是：贾宝玉在大观园闲逛时，偶然看到梨香院的小戏子龄官在蔷薇花架下，用簪子在地上反复划写一个“蔷”字。宝玉觉得好奇，走近观察，发现龄官神情专注，完全沉浸其中。她“划蔷”是因为“蔷”字是她心上人贾蔷名字中的一个字，她通过这种方式表达自己对贾蔷的深沉思念和爱恋。 “痴及局外”可以理解为：龄官对贾蔷的痴情已经达到了忘我的境界，她完全沉浸在自己的情感世界里，不顾周遭环境和旁人的存在，甚至连宝玉站在一旁都没有察觉。这种“痴”超越了外界的干扰和限制，也凸显了她对爱情的纯粹和执着。<br>________________________________________<br>第六部分 (26944bb24803937d4788d2983aa557f.jpg) 详细答案：<br>凤姐见三人和好，拉着见 贾母，恰好也见着宝钗。宝玉以杨妃比宝钗，宝钗大怒，黛玉面有得色，宝钗以 寿星老 “讽刺二人。<br>详细解释： 王熙凤看到宝玉、黛玉、宝钗三人关系缓和，便拉着他们去见贾母。在交谈中，宝玉以杨妃比喻宝钗，宝钗听后大怒，黛玉则面露得意之色。宝钗为了反击，便以“寿星老”来讽刺黛玉和宝玉两人，暗指他们年纪不小，却还在玩儿女情长，讽刺他们不成熟，也暗含了对黛玉体弱多病的影射。<br>宝玉淋雨回怡红院，叫了半日门。里面丫鬟们正在玩，没有听见。后来 晴雯，来开门，被宝玉抬脚踢在脸上。<br>详细解释： 宝玉淋雨回到怡红院，在门外叫了很久的门，但里面的丫鬟们正在玩耍嬉闹，没有人听见。最终是晴雯来开门，但由于开门迟缓，宝玉心急之下，抬脚踢在了晴雯的脸上，这为日后晴雯被撵出大观园埋下了伏笔。<br>椿龄，就是梨香园的演员龄官，她演小生，相貌有点像黛玉。她单恋着 贾蔷，害了相思病。一人躲在蔷薇树下，用簪子在地上不断书写贾蓉的名字，即“划蓉”是也。她 的这一行为被宝玉窥见了。宝玉对此事本是局外人，于他何干？但他非常关心。椿龄的痴情竟然感染到局外人宝玉了，故曰“ 痴及局外 ”。<br>详细解释： 龄官，梨香园的年轻戏子，因其清秀的长相与林黛玉有几分相似，且擅演小生。她对贾蔷单相思，因此相思成疾。她常独自一人躲在蔷薇花下，用簪子在地上反复划写“蔷”字（与贾蔷的“蔷”字谐音），表达对贾蔷的深情。宝玉偶然看到这一幕，虽然他与此事本无关联，却被龄官的痴情所打动，产生了共鸣。因此，脂砚斋批语称之为“痴及局外”，意指龄官的痴情感染了局外人宝玉。<br>简述“薛宝钗借扇机带双敲”的故事情节。<br>详细解释： 故事情节是：宝玉午睡醒来，丫鬟们发现扇子都坏了。宝钗趁此机会，假借送扇子给宝玉，实则巧妙地劝说宝玉应该用心读书，不要只顾玩乐。她的话看似平常，却“一语双关”，既表现了对宝玉的关心，又委婉地批评了黛玉小性儿，因为黛玉此前曾因宝玉的扇子损坏而生气。宝钗此举展现了她圆滑世故、察言观色的高超处世手腕。<br>金钏儿因何被打？结果怎样？<br>详细解释： 金钏儿是王夫人身边的丫鬟，因与贾宝玉在王夫人午睡时调笑，说了些亲近的话语，被王夫人听到。王夫人勃然大怒，误会金钏儿勾引宝玉，于是对她施以耳光并严厉训斥，随后将其撵出了贾府。金钏儿在被撵出后，不堪受此羞辱，最终选择了投井自尽，她的死也成为了宝玉心中一个难以抹去的阴影。<br>________________________________________<br>第七部分 (bada190f98658c61ab7ed3b10f792ff.jpg) 详细答案：<br>晴雯 黛玉心中后悔， 贾宝玉 知其心意，也与宝玉说话，笑黛玉小性儿。宝玉恰在此时来道，是黛玉本来见她来了反而吓得忙落泪。宝玉百般劝解黛玉却八讲气话，直到宝玉说到“ 你既知道我，我既知道你 ”，一人相对泪相告和好。 <br>详细解释： 黛玉与宝玉因为一些误会和小性子而闹矛盾，心中充满了后悔和委屈。晴雯了解黛玉的心意，也替宝玉说话，取笑黛玉的小性子。恰好此时宝玉前来，看到黛玉哭泣，便百般劝解。黛玉却仍旧讲着气话，直到宝玉说出“你既知道我，我既知道你”这样饱含深情、心意相通的话语，两人才终于解开心结，相视而泣，重归于好。这句话强调了他们之间超越言语的心灵默契和深厚感情。<br>________________________________________<br>第八部分 (ab9370f820cf8a30f46c6e3f56931e8.jpg) 详细答案：<br>到了端午节，贾母带众人分赴忠太及丫头们去清虚观打醮，有个小道士撞在 贾宝玉 怀里，便抱住了 贾宝玉。众人也只打 贾宝玉的肩膀。<br>详细解释： 端午节，贾母带着贾府上下到清虚观打醮（一种道教法事）。期间，一个小道士不小心撞进了贾宝玉的怀里，并顺势抱住了他。周围的众人只是轻轻地拍打了一下宝玉的肩膀，并没有过多责怪，这从侧面反映了宝玉在贾府受到的宠爱。<br>贾宝玉，贾琏赶紧拿宝石之机，奉上丁字样金簪，包涵金簪。宝玉买茯苓给 宝钗 等来送礼，贾母与他地说：“又不是什么正经事，我们不过休闲症。”“虽看了‘天’字，下午便回来。”<br>详细解释： 贾宝玉在清虚观时，贾琏趁机拿出丁字样金簪送给宝玉。宝玉还买了茯苓给宝钗等女性送礼。贾母对他说：“这也不是什么正经事，我们不过是来散散心，下午就回去了。”这表明贾母对这些道教仪式并不十分看重，只是把它当成一种休闲活动。<br>贾母叫贾珍说戏关本《 西厢记 》，贾珍说是汉高祖斩蛇起义的故事。第二本是《 长生殿 》，贾母很高兴。第三本是《 牡丹亭 》，贾母打了个便不言语。<br>详细解释： 贾母在清虚观看戏，首先点了一出《西厢记》，贾珍解释其内容是汉高祖斩蛇起义的故事（此处贾珍的解释实属混淆视听，因为《西厢记》是爱情故事）。第二本点的是《长生殿》，贾母听后很高兴，因为这出戏讲的是唐明皇与杨贵妃的爱情。第三本点的是《牡丹亭》，贾母听后却沉默不语，因为《牡丹亭》讲述的是杜丽娘为爱而死又还魂的故事，贾母可能觉得这戏过于缠绵或不吉利。<br>贾清庚女清虚观扫清，清宝玉渐次凉。宝玉第一次，第二次结果。<br>详细解释： 实际应为林黛玉。黛玉在清虚观感到身心疲惫，逐渐感到心灰意冷。第一次： 黛玉在清虚观时，心情郁闷，看到宝玉与旁人说笑，觉得自己被忽略，心中感到委屈和凉意，与宝玉之间产生小小的误解和隔阂。 第二次： 黛玉再次感受到这种凉意时，宝玉主动上前关心，两人通过坦诚的交流解开了心结，使得他们的感情反而更加深厚，从误会中走出来。<br>怎样理解林黛玉、贾宝玉二人用剪刀相互试探的心理？<br>详细解释： 林黛玉和贾宝玉用剪刀相互试探，是他们之间复杂情感关系的体现。黛玉剪穗子是为了试探宝玉的心意和底线，看他是否真的在乎自己，她内心充满了不安和猜疑。而宝玉剪扇坠则是对黛玉情绪的一种回应，既表达了对黛玉深沉的爱，也流露出赌气和无奈。这种行为背后，是他们对彼此感情的不确定，以及因性格敏感和外界压力（如金玉良缘的传闻）而产生的焦虑。他们的试探既是深爱的表现，也是感情脆弱性的折射。<br><br></p>` },
-      7: { title: "点下方链接跳转", content: `<a>https://laptop-14lyc.github.io/cpu/</a>` },
-      8: { title: "文章八标题", content: `<p>这是第八篇文章的内容。</p>` },
-      9: { title: "文章九标题", content: `<p>这是第九篇文章的内容。</p>` },
-      10: { title: "文章十标题", content: `<p>这是第十篇文章的内容。</p>` }
-    };
-
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('active');
+        // view modal
+        viewBtn.addEventListener('click',()=>openViewer(it));
+        delBtn.addEventListener('click',()=>{
+          if(!confirm('Delete this highlight?')) return;
+          let all = load(); all = all.filter(x=>x.id!==it.id); save(all); render();
+        });
+      })
     }
 
-    document.getElementById('article-list').addEventListener('click', function(e) {
-      const li = e.target.closest('li');
-      if (!li) return;
+    function openViewer(item){
+      // lightweight full-screen viewer
+      const overlay = document.createElement('div'); overlay.style.cssText='position:fixed;inset:0;background:rgba(2,6,23,0.9);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px';
+      const box = document.createElement('div'); box.style.cssText='max-width:1100px;width:100%;max-height:90%;overflow:auto;border-radius:10px;background:linear-gradient(180deg,#071226,#03101a);padding:16px;';
+      const h = document.createElement('h2'); h.textContent = item.title || '';
+      const p = document.createElement('p'); p.textContent = item.desc || ''; p.style.color='var(--muted)';
+      box.append(h,p);
+      const galleryInner = document.createElement('div'); galleryInner.style.cssText='display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px';
+      item.images.forEach(src=>{const i=document.createElement('img');i.src=src;i.style.cssText='width:100%;height:220px;object-fit:cover;border-radius:8px';galleryInner.appendChild(i)});
+      box.appendChild(galleryInner);
+      const close = document.createElement('div'); close.style.cssText='margin-top:12px;display:flex;justify-content:flex-end'; const cbtn=document.createElement('button'); cbtn.textContent='Close'; cbtn.className='small'; close.appendChild(cbtn); box.appendChild(close);
+      overlay.appendChild(box); document.body.appendChild(overlay);
+      cbtn.addEventListener('click',()=>overlay.remove());
+      overlay.addEventListener('click',e=>{ if(e.target===overlay) overlay.remove() });
+    }
 
-      const id = li.getAttribute('data-id');
-      if (articles[id]) {
-        document.querySelectorAll('#article-list li').forEach(item => item.classList.remove('active'));
-        li.classList.add('active');
-        document.getElementById('article-content').innerHTML = `<h2>${articles[id].title}</h2>${articles[id].content}`;
+    // uploader interactions
+    addBtn.addEventListener('click',()=>{modal.classList.add('show')});
+    cancelModal.addEventListener('click',()=>{closeModal()});
+    uploader.addEventListener('click',()=>fileInput.click());
+    document.getElementById('selectFiles').addEventListener('click',(e)=>{e.stopPropagation();fileInput.click()});
+    uploader.addEventListener('dragover',e=>{e.preventDefault();uploader.style.borderColor='rgba(255,255,255,0.12)'});
+    uploader.addEventListener('dragleave',e=>{e.preventDefault();uploader.style.borderColor='rgba(255,255,255,0.04)'});
+    uploader.addEventListener('drop',e=>{e.preventDefault();uploader.style.borderColor='rgba(255,255,255,0.04)';handleFiles(e.dataTransfer.files)});
+    fileInput.addEventListener('change',e=>handleFiles(e.target.files));
+
+    function handleFiles(files){
+      const arr = Array.from(files).slice(0,12); // limit per add
+      stagedFiles = stagedFiles.concat(arr);
+      refreshPreview();
+    }
+
+    function refreshPreview(){
+      previewRow.innerHTML='';
+      stagedFiles.forEach((f,idx)=>{
+        const div = document.createElement('div'); div.style.cssText='width:120px';
+        const img = document.createElement('img'); img.style.cssText='width:120px;height:80px;object-fit:cover;border-radius:8px';
+        const rem = document.createElement('div'); rem.style.cssText='text-align:center;margin-top:6px';
+        const btn = document.createElement('button'); btn.textContent='Remove'; btn.className='small';
+        rem.appendChild(btn);
+        div.appendChild(img); div.appendChild(rem); previewRow.appendChild(div);
+        const reader = new FileReader(); reader.onload = (e)=>{ img.src = e.target.result }
+        reader.readAsDataURL(f);
+        btn.addEventListener('click',()=>{stagedFiles.splice(idx,1); refreshPreview()});
+      })
+    }
+
+    saveModal.addEventListener('click',async ()=>{
+      if(stagedFiles.length===0){alert('Please add at least one image.');return}
+      const images = [];
+      for(const f of stagedFiles){
+        // convert to dataURL, optionally resize for robustness (skipped for simplicity)
+        const data = await fileToDataURL(f); images.push(data);
       }
+      const item = {id:uid(),title:titleInput.value,desc:descInput.value,tags:tagsInput.value.split(',').map(s=>s.trim()).filter(Boolean),images,createdAt:Date.now()};
+      const all = load(); all.push(item); save(all); closeModal(); render();
     });
+
+    function closeModal(){modal.classList.remove('show');stagedFiles=[];previewRow.innerHTML='';titleInput.value='';descInput.value='';tagsInput.value=''}
+
+    function fileToDataURL(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)})}
+
+    // export / import
+    exportBtn.addEventListener('click',()=>{
+      const data = localStorage.getItem(STORAGE_KEY) || '[]';
+      const blob = new Blob([data],{type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=url; a.download='special-highlights.json'; a.click(); URL.revokeObjectURL(url);
+    });
+
+    importBtn.addEventListener('click',()=>importFile.click());
+    importFile.addEventListener('change',e=>{
+      const f = e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{
+        try{const parsed = JSON.parse(r.result); if(!Array.isArray(parsed)) throw 0; save(parsed); render(); alert('Import successful.');}catch(err){alert('Invalid JSON file.')}
+      }; r.readAsText(f);
+    });
+
+    clearBtn.addEventListener('click',()=>{if(confirm('Clear all highlights from local storage?')){localStorage.removeItem(STORAGE_KEY);render()}});
+
+    // on first load, seed with a template example if empty
+    (function seed(){
+      const cur = load(); if(cur.length===0){
+        const example = [{id:uid(),title:'Clutch Finale — Rooftop',desc:'A last-second clutch with grenade jump and snipe.\nTeam cheered!',tags:['clutch','snipe'],images:['data:image/svg+xml;utf8,'+encodeURIComponent(makePlaceholderSVG('Clutch Finale — add photos'))],createdAt:Date.now()}]; save(example);
+      }
+    })();
+
+    function makePlaceholderSVG(text){
+      return `<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='700'><rect width='100%' height='100%' fill='%2302152a'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23a3b4c3' font-family='Arial' font-size='40'>${escapeXml(text)}</text></svg>`
+    }
+    function escapeXml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+    // initial render
+    render();
   </script>
 </body>
 </html>
