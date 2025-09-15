@@ -1,170 +1,116 @@
 <!doctype html>
 <html lang="zh">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Specia</title>
-  <style>
-    :root{--bg:#0f1724;--card:#0b1220;--accent:#8b5cf6;--muted:#9ca3af;--glass: rgba(255,255,255,0.03)}
-    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
-    body{background:linear-gradient(180deg,#031021 0%, #061426 60%);color:#e6eef8;padding:24px}
-    .container{max-width:1100px;margin:0 auto}
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:18px}
-    h1{margin:0;font-size:20px}
-    p.lead{margin:0;color:var(--muted);font-size:13px}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Specia</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#8b5cf6;--muted:#9ca3af;--glass: rgba(255,255,255,0.03)}
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{background:linear-gradient(180deg,#031021 0%, #061426 60%);color:#e6eef8;padding:24px}
+    .container{max-width:1100px;margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:18px}
+    h1{margin:0;font-size:20px}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
 
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:22px}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.04);box-shadow:0 6px 18px rgba(2,6,23,0.6);display:flex;flex-direction:column}
-    .thumb{height:180px;background:#0b1220;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-    .card-body{padding:12px}
-    .meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
-    .title{font-weight:600;margin:8px 0 6px}
-    .desc{font-size:13px;color:var(--muted);margin:0}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:22px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.04);box-shadow:0 6px 18px rgba(2,6,23,0.6);display:flex;flex-direction:column}
+    .thumb{height:180px;background:#0b1220;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .card-body{padding:12px}
+    .meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
+    .title{font-weight:600;margin:8px 0 6px}
+    .desc{font-size:13px;color:var(--muted);margin:0}
 
-    footer{margin-top:26px;color:var(--muted);font-size:13px;text-align:center}
- 
-    /*我发现有些图片效果不佳，加的这个，点击就能放大 */
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      visibility: hidden;
-      opacity: 0;
-      transition: visibility 0s, opacity 0.3s linear;
-    }
-
-    .overlay.is-visible {
-      visibility: visible;
-      opacity: 1;
-    }
-
-    .overlay img {
-      max-width: 90%;
-      max-height: 90%;
-      cursor: pointer;
-    }
-  </style>
+    footer{margin-top:26px;color:var(--muted);font-size:13px;text-align:center}
+  </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="brand">
-        <div class="logo">MW</div>
-        <div>
-          <h1>Special</h1>
-          <p class="lead">记录modern warships的三位大哥<span style="font-size: 1.5em;">Special Week【特别周】</span>、<span style="font-size: 1.5em;">Special Special【特别空间】</span>和<span style="color: orange;">JM 汉化组</span>。</p>
-        </div>
-      </div>
-    </header>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">MW</div>
+        <div>
+          <h1>Special</h1>
+          <p class="lead">记录modern warships的三位大哥Special Week【特别周】、Special Special【特别空间】和JM 汉化组。</p>
+        </div>
+      </div>
+    </header>
 
-    <main>
-      <section style="margin-top:18px">
-        <div class="grid">
-          <article class="card">
-            <div class="thumb">
-                <a href="#">
-                    <img src="https://github.com/MW-Special/blog/blob/main/D3290700754CD4C7271B63E4B38C5686.png?raw=true" alt="JM汉化组">
-                </a>
+    <main>
+      <section style="margin-top:18px">
+        <div class="grid">
+          <article class="card">
+            <div class="thumb"><img src="https://A" alt="JM汉化组"></div>
+            <div class="thumb"><img src="https://github.com/MW-Special/blog/blob/main/D3290700754CD4C7271B63E4B38C5686.png?raw=true" alt="JM汉化组"></div>
+            <div class="card-body">
+              <div class="title">大哥的宙斯盾大和</div>
+              <p class="desc">大哥觉得泛空间人技术太垃圾，盾和的防空和大和差不了哪去。于是一怒之下重新翻新了下大和</p>
             </div>
-            <div class="card-body">
-              <div class="title">大哥的宙斯盾大和</div>
-              <p class="desc">大哥觉得泛空间人技术太垃圾，盾和的防空和大和差不了哪去。于是一怒之下重新翻新了下大和</p>
-            </div>
-          </article>
+          </article>
 
-          <article class="card">
-            <div class="thumb">
-                <a href="#">
-                    <img src="https://github.com/MW-Special/blog/blob/main/2e0ad6b545a2087aa14c9cbbece62061_0.png?raw=true" alt="JM汉化组">
-                </a>
+          <article class="card">
+            <div class="thumb"><img src="https://github.com/MW-Special/blog/blob/main/2e0ad6b545a2087aa14c9cbbece62061_0.png?raw=true" alt="JM汉化组"></div>
+            <div class="card-body">
+              <div class="title">突击航母</div>
+              <p class="desc">航母一旦被近身，就离死不远了。于是大哥稍微增加了些航母的自保能力</p>
             </div>
-            <div class="card-body">
-              <div class="title">突击航母</div>
-              <p class="desc">航母一旦被近身，就离死不远了。于是大哥稍微增加了些航母的自保能力</p>
-            </div>
-          </article>
+          </article>
 
-          <article class="card">
-            <div class="thumb">
-                <a href="#">
-                    <img src="https://github.com/MW-Special/blog/blob/main/30B57B28707E3C2D8AE4C9DEF70635C7.jpg?raw=true" alt="JM">
-                </a>
+          <article class="card">
+            <div class="thumb"><img src="https://C" alt="JM"></div>
+            <div class="thumb"><img src="https://github.com/MW-Special/blog/blob/main/30B57B28707E3C2D8AE4C9DEF70635C7.jpg?raw=true" alt="JM"></div>
+            <div class="card-body">
+              <div class="title">潜艇航母</div>
+              <p class="desc">得到传奇，满心欢喜去兑换二级潜艇，结果发现二级上不了排位。你说气人不气人？为此大哥直接开的盾和打到了泛空间星，吓的谢尔盖赶紧造了个三级的给大哥</p>
             </div>
-            <div class="card-body">
-              <div class="title">潜艇航母</div>
-              <p class="desc">得到传奇，满心欢喜去兑换二级潜艇，结果发现二级上不了排位。你说气人不气人？为此大哥直接开的盾和打到了泛空间星，吓的谢尔盖赶紧造了个三级的给大哥</p>
-            </div>
-          </article>
+          </article>
 
-          <article class="card">
-  <div class="thumb">
-    <video src="https://raw.githubusercontent.com/MW-Special/blog/main/1918b5c97601b57af5005f62b6271d2a.mp4" controls preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;">
-      如果看到这个建议你换个浏览器
-    </video>
-  </div>
-  <div class="card-body">
-    <div class="title">【暂时没想好】</div>
-    <p class="desc">大哥起晚了，于是开速马力前往战场。咦？好像撞到了什么……</p>
-  </div>
+          <article class="card">
+  <div class="thumb">
+    <video src="https://github.com/MW-Special/blog/blob/main/1918b5c97601b57af5005f62b6271d2a.mp4" controls preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;">
+    <video src="https://raw.githubusercontent.com/MW-Special/blog/main/1918b5c97601b57af5005f62b6271d2a.mp4" controls preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;">
+      如果看到这个建议你换个浏览器
+    </video>
+  </div>
+  <div class="card-body">
+    <div class="title">【暂时没想好】</div>
+    <p class="desc">大哥起晚了，于是开速马力前往战场。咦？好像撞到了什么……</p>
+  </div>
 </article>
 
-          <article class="card">
-            <div class="thumb">
-                <a href="#">
-                    <img src="https://github.com/MW-Special/blog/blob/main/B33098251927CF2D46B79315B1B37656.png?raw=true" alt="Special">
-                </a>
+           <div class="thumb">
+    <video src="https://raw.githubusercontent.com/MW-Special/blog/main/1918b5c97601b57af5005f62b6271d2a.mp4" controls preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;">
+      如果看到这个建议你换个浏览器
+    </video>
+  </div>
+  <div class="card-body">
+    <div class="title">【暂时没想好】</div>
+    <p class="desc">大哥起晚了，于是开速马力前往战场。咦？好像撞到了什么……</p>
+  </div>
+</article>
+
+          <article class="card">
+            <div class="thumb"><img src="https://D" alt="Special"></div>
+            <div class="thumb"><img src="https://github.com/MW-Special/blog/blob/main/B33098251927CF2D46B79315B1B37656.png?raw=true" alt="Special"></div>
+            <div class="card-body">
+              <div class="title">BOSS</div>
+              <p class="desc">你游BOSS战废稿。</p>
             </div>
-            <div class="card-body">
-              <div class="title">BOSS</div>
-              <p class="desc">你游BOSS战废稿。</p>
-            </div>
-          </article>
-        </div>
-      </section>
+          </article>
+        </div>
+      </section>
 
-      <footer>
-        <small>为 <strong>Special and JM汉化组</strong> 制作。投稿请联系QQ:1260707630</small>
-      </footer>
-    </main>
-  </div>
-
-<div class="overlay" id="image-overlay">
-  <img src="" alt="Enlarged Image">
-</div>
-
-<script>
-  // 获取所有卡片中的图片链接
-  const imageLinks = document.querySelectorAll('.card .thumb a');
-  // 获取弹窗和弹窗内的图片元素
-  const overlay = document.getElementById('image-overlay');
-  const overlayImage = overlay.querySelector('img');
-
-  // 为每个链接添加点击事件
-  imageLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault(); // 阻止a标签的默认跳转行为
-      const imageSrc = link.querySelector('img').src; // 获取被点击图片的源地址
-      overlayImage.src = imageSrc; // QQ没有联系我邮箱也行535482Am@gmail.com
-      overlay.classList.add('is-visible'); // 显示弹窗
-    });
-  });
-
-  // 点击弹窗任意位置，即可关闭弹窗
-  overlay.addEventListener('click', () => {
-    overlay.classList.remove('is-visible'); // 隐藏弹窗
-    overlayImage.src = ""; // 清空图片
-  });
-</script>
-
+      <footer>
+        <small>为 <strong>Special and JM汉化组</strong> 制作。投稿请联系QQ:1260707630</small>
+      </footer>
+    </main>
+  </div>
 </body>
 </html>
+
+
+
+
