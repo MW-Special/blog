@@ -41,14 +41,17 @@
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:22px}
     .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.04);box-shadow:0 6px 18px rgba(2,6,23,0.6);display:flex;flex-direction:column}
     .thumb{height:180px;background:#0b1220;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;cursor:pointer}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
     .thumb img,
     .thumb video {width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;}
     .card-body{padding:12px}
+    .meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
     .title{font-weight:600;margin:8px 0 6px}
     .desc{font-size:13px;color:var(--muted);margin:0}
     footer{margin-top:26px;color:var(--muted);font-size:13px;text-align:center}
 
     /* 图片放大模态层 */
+    #imgModal {
     #imgModal,
     #videoModal {
       display:none;
@@ -60,6 +63,7 @@
       align-items:center;
       justify-content:center;
     }
+    #imgModal img {
     #imgModal img,
     #videoModal video {
       max-width:90%;
@@ -104,11 +108,90 @@
           <!-- 示例之二（视频） -->
           <article class="card">
             <div class="thumb">
+              <img src="https://github.com/MW-Special/blog/blob/main/2e0ad6b545a2087aa14c9cbbece62061_0.png?raw=true" alt="突击航母">
+            </div>
+            <div class="card-body">
+              <div class="title">突击航母</div>
+              <p class="desc">航母一旦被近身，就离死不远了。于是大哥稍微增加了些航母的自保能力</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">
+              <img src="https://github.com/MW-Special/blog/blob/main/30B57B28707E3C2D8AE4C9DEF70635C7.jpg?raw=true" alt="潜艇航母">
+            </div>
+            <div class="card-body">
+              <div class="title">潜艇航母</div>
+              <p class="desc">得到传奇，满心欢喜去兑换二级潜艇，结果发现二级上不了排位。你说气人不气人？为此大哥直接开的盾和打到了泛空间星，吓的谢尔盖赶紧造了个三级的给大哥</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">
+              <video src="https://raw.githubusercontent.com/MW-Special/blog/main/1918b5c97601b57af5005f62b6271d2a.mp4" controls preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;">
+                如果看到这个建议你换个浏览器
+              </video>
               <video src="https://raw.githubusercontent.com/MW-Special/blog/main/1918b5c97601b57af5005f62b6271d2a.mp4" preload="metadata"></video>
             </div>
             <div class="card-body">
               <div class="title">国道&大运</div>
               <p class="desc">大哥起晚了，于是开速马力前往战场。咦？好像撞到了什么……</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">
+              <img src="https://github.com/MW-Special/blog/blob/main/B33098251927CF2D46B79315B1B37656.png?raw=true" alt="BOSS">
+            </div>
+            <div class="card-body">
+              <div class="title">BOSS</div>
+              <p class="desc">你游BOSS战废稿。</p>
+            </div>
+          </article>
+          
+           <article class="card">
+            <div class="thumb">
+              <img src="https://github.com/MW-Special/blog/blob/main/1E4CA905DB0CF1899D73F4477726D525.jpg?raw=true" alt="OSS">
+            </div>
+            <div class="card-body">
+              <div class="title">复仇女神</div>
+              <p class="desc">大哥复仇女神特写</p>
+            </div>
+          </article>
+
+           <article class="card">
+            <div class="thumb">
+              <video src="https://github.com/MW-Special/cpu/raw/refs/heads/main/wuku_2.mp4" controls preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;">
+                如果看到这个建议你换个浏览器
+              </video>
+            </div>
+            <div class="card-body">
+              <div class="title">泛空间武库</div>
+              <p class="desc">激光武器，真正的科幻战舰</p>
+            </div>
+          </article>
+
+           <article class="card">
+            <div class="thumb">
+              <video src="https://github.com/MW-Special/cpu/raw/refs/heads/main/a74d06be44e4b76607d68e58f3da13bc.mp4" controls preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;">
+                如果看到这个建议你换个浏览器
+              </video>
+            </div>
+            <div class="card-body">
+              <div class="title">【德】宙斯盾俾斯麦号</div>
+              <p class="desc">【暂时没想好】</p>
+            </div>
+          </article>
+
+           <article class="card">
+            <div class="thumb">
+              <video src="https://github.com/MW-Special/cpu/raw/refs/heads/main/601d28e95a9fdb75bc82f62892947d7c.mp4" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;">
+                如果看到这个建议你换个浏览器
+              </video>
+            </div>
+            <div class="card-body">
+              <div class="title">宙斯盾大和</div>
+              <p class="desc">该船为泛空间星最初宙斯盾大和改造项目其中之一的方案，在测试中因为能源问题，该方案最终被废止，并且更换为更加平和的方案。</p>
             </div>
           </article>
 
@@ -135,6 +218,7 @@
         document.getElementById('imgModal').style.display = 'flex';
       });
     });
+    // 点击模态层关闭
     // 点击模态层关闭图片
     document.getElementById('imgModal').addEventListener('click', function() {
       this.style.display = 'none';
@@ -159,4 +243,3 @@
   </script>
 </body>
 </html>
-
